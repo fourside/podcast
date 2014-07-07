@@ -6,5 +6,4 @@ gem "rake"
 gem "shotgun"
 gem "unicorn"
 gem "rspec"
-gem "mp3info"
 
