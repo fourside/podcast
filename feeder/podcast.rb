@@ -3,19 +3,40 @@
 require 'rubygems'
 require 'sinatra'
 require 'haml'
+require 'yaml'
 require 'shotgun'
 require 'time'
 
 PUBLIC_DIR = File.dirname(__FILE__) + '/../public'
 set :public_folder, PUBLIC_DIR
 
-# todo
-# basic auth
-# sort by atime
+helpers do
+
+  def protect!
+    unless authorized?
+      response['WWW-Authenticate'] = %(Basic realm="private podcast")
+      throw(:halt, [401, "Not Authoried"])
+    end
+  end
+
+  def authorized?
+    @auth ||= Rack::Auth::Basic::Request.new(request.env)
+    auth = YAML.load_file(File.dirname(__FILE__) + '/config/auth.yml')
+    @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [auth['user'], auth['password']]
+  end
+
+end
+
 get '/feed' do
-  @mp3s = Dir.glob(PUBLIC_DIR + "/mp3/*.mp3")
+  protect!
+  @ext = '.mp3'
+  @mp3s = Dir.glob(PUBLIC_DIR + "/mp3/*#{@ext}").sort_by {|mp3| File::stat(mp3).mtime }
   @url = request.scheme + '://' + request.host + ':' + request.port.to_s
   haml :feed
+end
+
+error do
+  "server internal error."
 end
 
 __END__
@@ -29,8 +50,8 @@ __END__
     %pubDate #{Time.new.rfc822}
     - @mp3s.each do |mp3|
       %item
-        %title #{File.basename(mp3, '.mp3')}
-        %discription #{File.basename(mp3, '.mp3')}
+        %title #{File.basename(mp3, @ext)}
+        %discription #{File.basename(mp3, @ext)}
         %enclosure{:url => @url + '/mp3/' + URI.escape(File.basename(mp3)), :type => "audio/mpeg", :length =>File::stat(mp3).size}
         %pubDate #{File::stat(mp3).mtime.rfc822}
 
