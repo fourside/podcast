@@ -19,7 +19,7 @@ elif [ $# -eq 3 ]; then
 elif [ $# -eq 4 ]; then
   channel=$1
   output=$2
-  stop=$3
+  stopmin=$3
   mail=$4
   pass=$5
 else
@@ -30,7 +30,7 @@ fi
 # 夜中なら前日の日付
 hour=`date '+%H'`
 case $hour in
-    0[123])
+    0[0123])
         suffix=`date '+%Y%m%d' --date '1 day ago'`
         ;;
     *)
@@ -110,7 +110,7 @@ length=`perl -ne 'print $1 if(/x-radiko-keylength: (\d+)/i)' auth1_fms`
 
 partialkey=`dd if=$keyfile bs=1 skip=${offset} count=${length} 2> /dev/null | base64`
 
-echo "authtoken: ${authtoken} \noffset: ${offset} length: ${length} \npartialkey: $partialkey"
+#echo "authtoken: ${authtoken} \noffset: ${offset} length: ${length} \npartialkey: $partialkey"
 
 rm -f auth1_fms
 
@@ -139,10 +139,10 @@ if [ $? -ne 0 -o ! -f auth2_fms ]; then
   exit 1
 fi
 
-echo "authentication success"
+#echo "authentication success"
 
 areaid=`perl -ne 'print $1 if(/^([^,]+),/i)' auth2_fms`
-echo "areaid: $areaid"
+#echo "areaid: $areaid"
 
 rm -f auth2_fms
 
@@ -173,12 +173,16 @@ rtmpdump -v \
          -C S:"" -C S:"" -C S:"" -C S:$authtoken \
          --live \
          --flv $flv \
-         -B $stopmin
-
+         -B $stopmin \
+         2>> ./rtmpdump.log
 #
 # ffmpeg
 #
 
 mp3="${output}-${suffix}.mp3"
-ffmpeg -i $flv $mp3
+artist=`ruby ./mp3tag.rb artist $mp3`
+title=`ruby ./mp3tag.rb title  $mp3`
+year=`ruby ./mp3tag.rb year   $mp3`
+ffmpeg -i $flv -metadata artist=$artist -metadata title=$title -metadata year=$year $mp3
+
 
