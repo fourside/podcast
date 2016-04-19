@@ -7,8 +7,8 @@ require 'yaml'
 require 'shotgun'
 require 'time'
 
-PUBLIC_DIR = File.dirname(__FILE__) + '/../public'
-set :public_folder, PUBLIC_DIR
+mp3_dir = File.dirname(__FILE__) + '/../public'
+#set :public_folder, PUBLIC_DIR
 
 helpers do
 
@@ -30,7 +30,7 @@ end
 get '/feed' do
   protect!
   @ext = '.mp3'
-  @mp3s = Dir.glob(PUBLIC_DIR + "/mp3/*#{@ext}").sort_by {|mp3| File::stat(mp3).mtime }
+  @mp3s = Dir.glob(mp3_dir + "/mp3/*#{@ext}").sort_by {|mp3| File::stat(mp3).mtime }
   @url = request.scheme + '://' + request.host + ':' + request.port.to_s
   haml :feed
 end

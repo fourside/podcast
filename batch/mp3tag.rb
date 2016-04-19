@@ -21,6 +21,8 @@ class Mp3tag
 
   def tag filename
     case filename
+    when /らじおと/
+      Tag.new "伊集院光", "伊集院光とらじおと"
     when /深夜の馬鹿力/
       Tag.new "伊集院光", "伊集院光・深夜の馬鹿力"
     when /爆笑問題カーボーイ/
@@ -29,6 +31,8 @@ class Mp3tag
       Tag.new "町山智浩", "たまむすび"
     when /週末TUTAYA/
       Tag.new "伊集院光・小林悠", "週末TUTAYAに行ってこれ借りよう"
+    when /粋な夜電波/
+      Tag.new "菊地成孔", "菊地成孔の粋な夜電波"
     when /バナナムーン/
       Tag.new "バナナマン", "バナナムーンGOLD"
     when /ウィークエンドシャッフル/

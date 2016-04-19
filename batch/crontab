@@ -22,11 +22,12 @@
 # m h  dom mon dow   command
 SHELL=/bin/bash
 PATH=/usr/local/bin:/bin:/usr/bin
+25 8 * * 1-4 cd ~/work/radio/batch && ./rec_radiko.sh TBS ~/work/radio/public/mp3/らじおと 160 > /dev/null
 55 0  * * 2 cd ~/work/radio/batch && ./rec_radiko.sh TBS ~/work/radio/public/mp3/伊集院光深夜の馬鹿力 130 > /dev/null
-55 14 * * 2 cd ~/work/radio/batch && ./rec_radiko.sh TBS ~/work/radio/public/mp3/町山智浩たまむすび 40 > /dev/null
+55 14 * * 2 cd ~/work/radio/batch && ./rec_radiko.sh TBS ~/work/radio/public/mp3/町山智浩たまむすび 35 > /dev/null
 55 0  * * 3 cd ~/work/radio/batch && ./rec_radiko.sh TBS ~/work/radio/public/mp3/爆笑問題カーボーイ 130 > /dev/null
-55 14 * * 5 cd ~/work/radio/batch && ./rec_radiko.sh TBS ~/work/radio/public/mp3/週末TUTAYA 40 > /dev/null
+55 14 * * 5 cd ~/work/radio/batch && ./rec_radiko.sh TBS ~/work/radio/public/mp3/週末TUTAYA 35 > /dev/null
 55 23 * * 5 cd ~/work/radio/batch && ./rec_radiko.sh TBS ~/work/radio/public/mp3/粋な夜電波 65 > /dev/null
 58 0  * * 6 cd ~/work/radio/batch && ./rec_radiko.sh TBS ~/work/radio/public/mp3/バナナムーン 125 > /dev/null
-55 21 * * 6 cd ~/work/radio/batch && ./rec_radiko.sh TBS ~/work/radio/public/mp3/ウィークエンドシャッフル 160 > /dev/null
+55 21 * * 6 cd ~/work/radio/batch && ./rec_radiko.sh TBS ~/work/radio/public/mp3/ウィークエンドシャッフル 125 > /dev/null
 55 0  * * 7 cd ~/work/radio/batch && ./rec_radiko.sh TBS ~/work/radio/public/mp3/エレ片のコント太郎 130 > /dev/null
