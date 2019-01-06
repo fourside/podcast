@@ -4,11 +4,9 @@ require 'rubygems'
 require 'sinatra'
 require 'haml'
 require 'yaml'
-require 'shotgun'
 require 'time'
 
 mp3_dir = File.dirname(__FILE__) + '/../public'
-#set :public_folder, PUBLIC_DIR
 
 helpers do
 
