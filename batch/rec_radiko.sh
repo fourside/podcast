@@ -1,7 +1,7 @@
 #!/bin/bash
 cd `dirname $0`
 
-playerurl=http://radiko.jp/player/swf/player_4.1.0.00.swf
+playerurl=http://radiko.jp/apps/js/flash/myplayer-release.swf
 cookiefile=./cookie.txt
 playerfile=./player.swf
 keyfile=./authkey.png
@@ -69,7 +69,7 @@ fi
 # get keydata (need swftool)
 #
 if [ ! -f $keyfile ]; then
-  swfextract -b 14 $playerfile -o $keyfile
+  swfextract -b 12 $playerfile -o $keyfile
 
   if [ ! -f $keyfile ]; then
     echo "failed get keydata"
@@ -86,8 +86,8 @@ fi
 #
 wget -q \
      --header="pragma: no-cache" \
-     --header="X-Radiko-App: pc_1" \
-     --header="X-Radiko-App-Version: 2.0.1" \
+     --header="X-Radiko-App: pc_ts" \
+     --header="X-Radiko-App-Version: 4.0.0" \
      --header="X-Radiko-User: test-stream" \
      --header="X-Radiko-Device: pc" \
      --post-data='\r\n' \
@@ -183,6 +183,6 @@ mp3="${output}-${suffix}.mp3"
 artist=`ruby ./mp3tag.rb artist $mp3`
 title=`ruby ./mp3tag.rb title  $mp3`
 year=`ruby ./mp3tag.rb year   $mp3`
-ffmpeg -i $flv -metadata artist=$artist -metadata title=$title -metadata year=$year $mp3
+ffmpeg -i $flv -b:a 128k -metadata artist=$artist -metadata title=$title -metadata year=$year $mp3
 
 
