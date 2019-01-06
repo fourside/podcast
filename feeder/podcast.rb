@@ -32,6 +32,7 @@ get '/feed' do
   @ext = '.mp3'
   @mp3s = Dir.glob(mp3_dir + "/mp3/*#{@ext}").sort_by {|mp3| File::stat(mp3).mtime }
   @url = request.scheme + '://' + request.host + ':' + request.port.to_s
+  content_type "application/xml"
   haml :feed
 end
 
@@ -42,7 +43,7 @@ end
 __END__
 
 @@ feed
-!!!XML utf-8
+!!! XML utf-8
 %rss{:version => "2.0", "xmlns:itunes" => "http://www.itunes.com/dtds/podcast-1.0.dtd"}
   %channel
     %description private podcast
