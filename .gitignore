@@ -4,3 +4,5 @@
 *flv
 *log
 *pid
+bin/
+.bundle/
