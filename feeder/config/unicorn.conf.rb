@@ -1,6 +1,6 @@
 
 worker_processes 2
-app_root = ENV["APP_ROOT"]
+app_root = ENV["APP_ROOT"] || File.dirname(__FILE__) + "/.."
 working_directory app_root
 
 listen "#{app_root}/logs/unicorn.sock", :backlog => 1
