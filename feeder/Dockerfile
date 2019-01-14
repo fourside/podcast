@@ -13,4 +13,3 @@ RUN apk add --no-cache --virtual .ruby-builddeps \
     && apk del .ruby-builddeps
 
 CMD ["bundle", "exec", "unicorn", "-c", "config/unicorn.conf.rb"]
-
