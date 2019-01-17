@@ -1,13 +1,9 @@
-FROM ruby:2.6-alpine3.8
+FROM alpine:3.8 as builder
 
 WORKDIR work
 
-COPY . .
-
 RUN apk add --no-cache --virtual .build-deps \
-        gcc make libc-dev tzdata \
-    && apk add --no-cache \
-        bash wget perl libxml2-utils rtmpdump ffmpeg \
+        gcc make libc-dev zlib-dev tzdata \
     && wget http://www.swftools.org/swftools-2013-04-09-1007.tar.gz \
     && tar xzf swftools-2013-04-09-1007.tar.gz \
     && cd swftools-2013-04-09-1007 \
@@ -15,9 +11,21 @@ RUN apk add --no-cache --virtual .build-deps \
     && cd - \
     && rm -rf ./swftools* \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
-    && crontab ./crontab \
-    && mkdir ../public \
     && apk del .build-deps
+
+
+FROM ruby:2.6-alpine3.8
+
+WORKDIR work
+
+COPY . .
+COPY --from=builder /etc/localtime /etc/
+COPY --from=builder /usr/local/bin/swfextract /usr/local/bin/
+
+RUN apk add --no-cache \
+        bash wget perl libxml2-utils rtmpdump ffmpeg \
+    && crontab ./crontab \
+    && mkdir ../public
 
 CMD ["crond", "-f", "-L", "/var/log/cron.log"]
 
