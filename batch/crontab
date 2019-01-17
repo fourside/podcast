@@ -1,34 +1,12 @@
-# Edit this file to introduce tasks to be run by cron.
-# 
-# Each task to run has to be defined through a single line
-# indicating with different fields when the task will be run
-# and what command to run for the task
-# 
-# To define the time you can provide concrete values for
-# minute (m), hour (h), day of month (dom), month (mon),
-# and day of week (dow) or use '*' in these fields (for 'any').# 
-# Notice that tasks will be started based on the cron's system
-# daemon's notion of time and timezones.
-# 
-# Output of the crontab jobs (including errors) is sent through
-# email to the user the crontab file belongs to (unless redirected).
-# 
-# For example, you can run a backup of all your user accounts
-# at 5 a.m every week with:
-# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
-# 
-# For more information see the manual pages of crontab(5) and cron(8)
-# 
-# m h  dom mon dow   command
 SHELL=/bin/bash
 PATH=/usr/local/bin:/bin:/usr/bin
-28 8 * * 1-4 cd ~/workspace/podcast/batch && ./rec_radiko.sh TBS ~/workspace/podcast/public/mp3/らじおと 160 > /dev/null
-58 0  * * 2  cd ~/workspace/podcast/batch && ./rec_radiko.sh TBS ~/workspace/podcast/public/mp3/伊集院光深夜の馬鹿力 130 > /dev/null
-55 14 * * 2  cd ~/workspace/podcast/batch && ./rec_radiko.sh TBS ~/workspace/podcast/public/mp3/町山智浩たまむすび 35 > /dev/null
-58 0  * * 3  cd ~/workspace/podcast/batch && ./rec_radiko.sh TBS ~/workspace/podcast/public/mp3/爆笑問題カーボーイ 130 > /dev/null
-58 20  * * 4  cd ~/workspace/podcast/batch && ./rec_radiko.sh TBS ~/workspace/podcast/public/mp3/マイゲーム・マイライフ 34 > /dev/null
-58 0  * * 6  cd ~/workspace/podcast/batch && ./rec_radiko.sh TBS ~/workspace/podcast/public/mp3/バナナムーン 125 > /dev/null
-58 17 * * 1-5  cd ~/workspace/podcast/batch && ./rec_radiko.sh TBS ~/workspace/podcast/public/mp3/アフター6ジャンクション 184 > /dev/null
-55 0  * * 7  cd ~/workspace/podcast/batch && ./rec_radiko.sh TBS ~/workspace/podcast/public/mp3/エレ片のコント太郎 130 > /dev/null
-0 0 * * 1 find ~/workspace/podcast/public/mp3/ -mtime +25 |xargs rm
+28 8 * * 1-4  ruby /work/recorder.rb radioto       160 /public 
+58 17 * * 1-5 ruby /work/recorder.rb atoroku       184 /public
+58 0  * * 2   ruby /work/recorder.rb baka          130 /public
+55 14 * * 2   ruby /work/recorder.rb machiyama     35  /public
+58 0  * * 3   ruby /work/recorder.rb cowboy        130 /public
+58 20 * * 4   ruby /work/recorder.rb mygame-mylife 34  /public
+58 0  * * 6   ruby /work/recorder.rb bananamoon    125 /public
+58 0  * * 7   ruby /work/recorder.rb elekata       125 /public
+0 0 * * 1     find /public/ -mtime +25 |xargs rm
 
