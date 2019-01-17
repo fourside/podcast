@@ -1,4 +1,6 @@
 #!/bin/bash
+set -ex
+
 cd `dirname $0`
 
 playerurl=http://radiko.jp/apps/js/flash/myplayer-release.swf
