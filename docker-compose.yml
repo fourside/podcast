@@ -7,7 +7,7 @@ services:
       - 8081:8080
     volumes:
       - type: volume
-        source: FEEDER_LOGS
+        source: FEEDER_SOCKET_DIR
         target: /app/logs
       - type: volume
         source: PUBLIC_DIR
@@ -19,13 +19,20 @@ services:
       - 8082:80
     volumes:
       - type: volume
-        source: FEEDER_LOGS
+        source: FEEDER_SOCKET_DIR
         target: /var/run/feeder
       - type: volume
         source: PUBLIC_DIR
-        target: /work/public
+        target: /public/mp3
+
+  batch:
+    build: ./batch
+    volumes:
+      - type: volume
+        source: PUBLIC_DIR
+        target: /public
 
 volumes:
-  FEEDER_LOGS:
+  FEEDER_SOCKET_DIR:
   PUBLIC_DIR:
 
