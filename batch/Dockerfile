@@ -14,7 +14,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk del .build-deps
 
 
-FROM ruby:2.6-alpine3.8
+FROM alpine:3.8
 
 WORKDIR work
 
@@ -23,7 +23,7 @@ COPY --from=builder /etc/localtime /etc/
 COPY --from=builder /usr/local/bin/swfextract /usr/local/bin/
 
 RUN apk add --no-cache \
-        bash wget perl libxml2-utils rtmpdump ffmpeg \
+        bash wget perl libxml2-utils rtmpdump ffmpeg ruby \
     && crontab ./crontab \
     && mkdir ../public
 
