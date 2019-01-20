@@ -1,9 +1,9 @@
 
 worker_processes 2
-app_root = "~fourside/work/radio/feeder"
+app_root = ENV["APP_ROOT"] || File.dirname(__FILE__) + "/.."
 working_directory app_root
 
-listen "#{app_root}/logs/unicorn.sock", :backlog => 1
+listen "#{app_root}/socket/unicorn.sock", :backlog => 1
 listen 8080, :tcp_nopush => true
 
 timeout 60 * 60 * 3
