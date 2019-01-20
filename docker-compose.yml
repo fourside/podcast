@@ -6,7 +6,7 @@ services:
     volumes:
       - type: volume
         source: FEEDER_SOCKET_DIR
-        target: /app/logs
+        target: /app/socket
         read_only: false
       - type: volume
         source: PUBLIC_DIR
