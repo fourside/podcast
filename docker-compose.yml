@@ -3,15 +3,15 @@ services:
 
   feeder:
     build: ./feeder
-    ports:
-      - 8081:8080
     volumes:
       - type: volume
         source: FEEDER_SOCKET_DIR
         target: /app/logs
+        read_only: false
       - type: volume
         source: PUBLIC_DIR
         target: /public
+        read_only: true
 
   nginx:
     build: ./nginx
@@ -21,9 +21,11 @@ services:
       - type: volume
         source: FEEDER_SOCKET_DIR
         target: /var/run/feeder
+        read_only: false
       - type: volume
         source: PUBLIC_DIR
         target: /public/mp3
+        read_only: true
 
   batch:
     build: ./batch
@@ -31,6 +33,7 @@ services:
       - type: volume
         source: PUBLIC_DIR
         target: /public
+        read_only: false
 
 volumes:
   FEEDER_SOCKET_DIR:
