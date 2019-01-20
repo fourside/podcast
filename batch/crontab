@@ -1,12 +1,12 @@
 SHELL=/bin/bash
 PATH=/usr/local/bin:/bin:/usr/bin
-28 8  * * 1-4 /work/rec_radiko.sh TBS /public/らじおと 160
-58 0  * * 2   /work/rec_radiko.sh TBS /public/伊集院光深夜の馬鹿力 130
-55 14 * * 2   /work/rec_radiko.sh TBS /public/町山智浩たまむすび 35
-58 0  * * 3   /work/rec_radiko.sh TBS /public/爆笑問題カーボーイ 130
-58 20 * * 4   /work/rec_radiko.sh TBS /public/マイゲーム・マイライフ 34
-58 0  * * 6   /work/rec_radiko.sh TBS /public/バナナムーン 125
-58 17 * * 1-5 /work/rec_radiko.sh TBS /public/アフター6ジャンクション 184
-58 0  * * 0   /work/rec_radiko.sh TBS /public/エレ片のコント太郎 125
+28 8  * * 1-4 /work/rec_radiko.sh TBS /work/らじおと 160                && mv /work/*.mp3 /public
+58 0  * * 2   /work/rec_radiko.sh TBS /work/伊集院光深夜の馬鹿力 130    && mv /work/*.mp3 /public
+55 14 * * 2   /work/rec_radiko.sh TBS /work/町山智浩たまむすび 35       && mv /work/*.mp3 /public
+58 0  * * 3   /work/rec_radiko.sh TBS /work/爆笑問題カーボーイ 130      && mv /work/*.mp3 /public
+58 20 * * 4   /work/rec_radiko.sh TBS /work/マイゲーム・マイライフ 34   && mv /work/*.mp3 /public
+58 0  * * 6   /work/rec_radiko.sh TBS /work/バナナムーン 125            && mv /work/*.mp3 /public
+58 17 * * 1-5 /work/rec_radiko.sh TBS /work/アフター6ジャンクション 184 && mv /work/*.mp3 /public
+58 0  * * 0   /work/rec_radiko.sh TBS /work/エレ片のコント太郎 125      && mv /work/*.mp3 /public
 0  0  * * 1   find /public/ -mtime +25 | xargs rm
 
