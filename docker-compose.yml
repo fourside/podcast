@@ -12,6 +12,10 @@ services:
         source: PUBLIC_DIR
         target: /public
         read_only: true
+    logging:
+        driver: fluentd
+    depends_on:
+        - fluentd
 
   nginx:
     build: ./nginx
@@ -26,6 +30,10 @@ services:
         source: PUBLIC_DIR
         target: /public/mp3
         read_only: true
+    logging:
+        driver: fluentd
+    depends_on:
+        - fluentd
 
   batch:
     build: ./batch
@@ -34,6 +42,15 @@ services:
         source: PUBLIC_DIR
         target: /public
         read_only: false
+    logging:
+        driver: fluentd
+    depends_on:
+        - fluentd
+
+  fluentd:
+    build: ./fluentd
+    ports:
+        - 24224:24224
 
 volumes:
   FEEDER_SOCKET_DIR:
