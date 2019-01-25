@@ -1,6 +1,6 @@
-FROM fluent/fluentd:v1.3.3
+FROM fluent/fluentd:v1.3-1
 
-ENV FLUENTD_CONF test.conf
+ENV FLUENTD_CONF fluent.conf
 
-COPY ./test.conf /fluentd/etc/test.conf
+COPY ./fluent.conf /fluentd/etc/
 

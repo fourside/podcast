@@ -11,6 +11,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && cd - \
     && rm -rf ./swftools* \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
+    && ln -s /dev/stdout /var/log/cron.log \
     && apk del .build-deps
 
 
