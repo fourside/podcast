@@ -11,7 +11,6 @@ RUN apk add --no-cache --virtual .build-deps \
     && cd - \
     && rm -rf ./swftools* \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
-    && ln -s /dev/stdout /var/log/cron.log \
     && apk del .build-deps
 
 
@@ -26,6 +25,7 @@ COPY --from=builder /usr/local/bin/swfextract /usr/local/bin/
 RUN apk add --no-cache \
         bash wget perl libxml2-utils rtmpdump ffmpeg ruby \
     && crontab ./crontab \
+    && ln -s /dev/stdout /var/log/cron.log \
     && mkdir ../public
 
 CMD ["crond", "-f", "-L", "/var/log/cron.log"]
