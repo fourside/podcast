@@ -33,7 +33,7 @@ fi
 hour=`date '+%H'`
 case $hour in
     0[0123])
-        suffix=`date '+%Y%m%d' --date '1 day ago'`
+        suffix=`date -d "@$(( `date +%s`-24*60*60 ))" +%Y%m%d"))"`
         ;;
     *)
         suffix=`date '+%Y%m%d'`
