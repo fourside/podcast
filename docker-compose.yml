@@ -3,6 +3,7 @@ services:
 
   feeder:
     build: ./feeder
+    image: "${APP}_feeder:${TAG}"
     volumes:
       - type: volume
         source: FEEDER_SOCKET_DIR
@@ -12,13 +13,10 @@ services:
         source: PUBLIC_DIR
         target: /public
         read_only: true
-    logging:
-        driver: fluentd
-    depends_on:
-        - fluentd
 
   nginx:
     build: ./nginx
+    image: "${APP}_nginx:${TAG}"
     ports:
       - 8082:80
     volumes:
@@ -30,27 +28,15 @@ services:
         source: PUBLIC_DIR
         target: /public/mp3
         read_only: true
-    logging:
-        driver: fluentd
-    depends_on:
-        - fluentd
 
   batch:
     build: ./batch
+    image: "${APP}_batch:${TAG}"
     volumes:
       - type: volume
         source: PUBLIC_DIR
         target: /public
         read_only: false
-    logging:
-        driver: fluentd
-    depends_on:
-        - fluentd
-
-  fluentd:
-    build: ./fluentd
-    ports:
-        - 24224:24224
 
 volumes:
   FEEDER_SOCKET_DIR:
