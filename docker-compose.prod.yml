@@ -1,0 +1,33 @@
+version: "3.2"
+services:
+
+  feeder:
+    restart: always
+    logging:
+        driver: fluentd
+    depends_on:
+        - fluentd
+
+  nginx:
+    ports:
+        - 80:80
+    restart: always
+    logging:
+        driver: fluentd
+    depends_on:
+        - fluentd
+
+  batch:
+    restart: always
+    logging:
+        driver: fluentd
+    depends_on:
+        - fluentd
+
+  fluentd:
+    image: "${APP}_fluentd:${TAG}"
+    build: ./fluentd
+    ports:
+        - 24224:24224
+    restart: always
+

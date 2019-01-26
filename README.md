@@ -2,6 +2,9 @@
 - generate rss feed for podcast
 - protect by basic auth for private use
 
+## usage
+- in development, `docker-compose up -d`
+- in production, `docker-compose -f docker-compose.yml -f docker-compse.prod.yml up -d`
 
 ## docker version
 
