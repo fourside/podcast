@@ -30,4 +30,19 @@ services:
     ports:
         - 24224:24224
     restart: always
+    networks:
+        - mongo_network
+    depends_on:
+        - logdb
 
+  logdb:
+    image: "${APP}_logdb:${TAG}"
+    build: ./logdb
+    ports:
+        - 27017:27107
+    restart: always
+    networks:
+        - mongo_network
+
+networks:
+  mongo_network:
