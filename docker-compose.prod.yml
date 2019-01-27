@@ -40,9 +40,16 @@ services:
     build: ./logdb
     ports:
         - 27017:27107
+    volumes:
+      - type: volume
+        source: LOGDB_DATA
+        target: /data/db
+        read_only: false
     restart: always
     networks:
         - mongo_network
 
 networks:
   mongo_network:
+volumes:
+  LOGDB_DATA:
