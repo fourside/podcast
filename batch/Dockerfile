@@ -25,6 +25,7 @@ COPY --from=builder /usr/local/bin/swfextract /usr/local/bin/
 RUN apk add --no-cache \
         bash wget perl libxml2-utils rtmpdump ffmpeg ruby \
     && crontab ./crontab \
+    && ln -s /dev/stdout /var/log/cron.log \
     && mkdir ../public
 
 CMD ["crond", "-f", "-L", "/var/log/cron.log"]

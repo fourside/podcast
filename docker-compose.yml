@@ -3,6 +3,7 @@ services:
 
   feeder:
     build: ./feeder
+    image: "${APP}_feeder:${TAG}"
     volumes:
       - type: volume
         source: FEEDER_SOCKET_DIR
@@ -15,6 +16,7 @@ services:
 
   nginx:
     build: ./nginx
+    image: "${APP}_nginx:${TAG}"
     ports:
       - 8082:80
     volumes:
@@ -29,6 +31,7 @@ services:
 
   batch:
     build: ./batch
+    image: "${APP}_batch:${TAG}"
     volumes:
       - type: volume
         source: PUBLIC_DIR

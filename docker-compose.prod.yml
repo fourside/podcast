@@ -1,0 +1,55 @@
+version: "3.2"
+services:
+
+  feeder:
+    restart: always
+    logging:
+        driver: fluentd
+    depends_on:
+        - fluentd
+
+  nginx:
+    ports:
+        - 80:80
+    restart: always
+    logging:
+        driver: fluentd
+    depends_on:
+        - fluentd
+
+  batch:
+    restart: always
+    logging:
+        driver: fluentd
+    depends_on:
+        - fluentd
+
+  fluentd:
+    image: "${APP}_fluentd:${TAG}"
+    build: ./fluentd
+    ports:
+        - 24224:24224
+    restart: always
+    networks:
+        - mongo_network
+    depends_on:
+        - logdb
+
+  logdb:
+    image: "${APP}_logdb:${TAG}"
+    build: ./logdb
+    ports:
+        - 27017:27107
+    volumes:
+      - type: volume
+        source: LOGDB_DATA
+        target: /data/db
+        read_only: false
+    restart: always
+    networks:
+        - mongo_network
+
+networks:
+  mongo_network:
+volumes:
+  LOGDB_DATA:

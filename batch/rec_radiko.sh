@@ -33,7 +33,7 @@ fi
 hour=`date '+%H'`
 case $hour in
     0[0123])
-        suffix=`date '+%Y%m%d' --date '1 day ago'`
+        suffix=`date -d "@$(( `date +%s`-24*60*60 ))" +%Y%m%d"))"`
         ;;
     *)
         suffix=`date '+%Y%m%d'`
@@ -175,8 +175,7 @@ rtmpdump -v \
          -C S:"" -C S:"" -C S:"" -C S:$authtoken \
          --live \
          --flv $flv \
-         -B $stopmin \
-         2>> ./rtmpdump.log
+         -B $stopmin
 #
 # ffmpeg
 #
@@ -186,5 +185,4 @@ artist=`ruby ./mp3tag.rb artist $mp3`
 title=`ruby ./mp3tag.rb title  $mp3`
 year=`ruby ./mp3tag.rb year   $mp3`
 ffmpeg -i $flv -b:a 128k -metadata artist=$artist -metadata title=$title -metadata year=$year $mp3
-
 
