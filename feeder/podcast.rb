@@ -4,7 +4,7 @@ require 'rubygems'
 require 'sinatra'
 require 'haml'
 require 'yaml'
-require 'time'
+require './mp3file'
 
 mp3_dir = '/public'
 
@@ -27,9 +27,8 @@ end
 
 get '/feed' do
   protect!
-  @ext = '.mp3'
-  @mp3s = Dir.glob(mp3_dir + "/*#{@ext}").sort_by {|mp3| File::stat(mp3).mtime }
-  @url = request.scheme + '://' + request.host
+  @mp3s = Dir.glob(mp3_dir + "/*#{Mp3File::EXT}").map{|file| Mp3File.new file }.sort
+  @url = request.scheme + '://' + request.host + '/mp3/'
   content_type "application/xml"
   haml :feed
 end
@@ -49,8 +48,8 @@ __END__
     %pubDate #{Time.new.rfc822}
     - @mp3s.each do |mp3|
       %item
-        %title #{File.basename(mp3, @ext)}
-        %discription #{File.basename(mp3, @ext)}
-        %enclosure{:url => @url + '/mp3/' + URI.escape(File.basename(mp3)), :type => "audio/mpeg", :length =>File::stat(mp3).size}
-        %pubDate #{File::stat(mp3).mtime.rfc822}
+        %title #{mp3.basename}
+        %discription #{mp3.basename}
+        %enclosure{:url => @url + mp3.url_path, :type => "audio/mpeg", :length => mp3.size}
+        %pubDate #{mp3.mtime}
 
