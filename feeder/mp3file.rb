@@ -15,7 +15,7 @@ class Mp3File
   end
 
   def url_path
-    URI.escape(self.basename)
+    URI.escape(self.basename + EXT)
   end
 
   def size
