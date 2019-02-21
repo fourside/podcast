@@ -8,5 +8,5 @@ PATH=/usr/local/bin:/bin:/usr/bin
 58 0  * * 6   /work/rec_radiko.sh TBS /work/バナナムーン 125            && mv /work/*.mp3 /public
 58 17 * * 1-5 /work/rec_radiko.sh TBS /work/アフター6ジャンクション 184 && mv /work/*.mp3 /public
 58 0  * * 0   /work/rec_radiko.sh TBS /work/エレ片のコント太郎 125      && mv /work/*.mp3 /public
-0  0  * * 1   find /public/ -mtime +25 | xargs rm
+0  0  * * *   find /public/ -mtime +15 | xargs rm
 
