@@ -1,4 +1,4 @@
-FROM alpine:3.8 as builder
+FROM alpine:3.11.2 as builder
 
 WORKDIR work
 
@@ -14,7 +14,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk del .build-deps
 
 
-FROM alpine:3.8
+FROM alpine:3.11.2
 
 WORKDIR work
 
