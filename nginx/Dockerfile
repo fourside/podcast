@@ -1,4 +1,4 @@
-FROM nginx:1.15.8-alpine
+FROM nginx:1.17.7-alpine
 
 RUN apk add --no-cache --virtual .build-deps \
         tzdata \
