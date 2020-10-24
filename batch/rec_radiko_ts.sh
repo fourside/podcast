@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Radiko timefree program recorder
 # Copyright (C) 2017-2019 uru (https://twitter.com/uru_2)
@@ -294,6 +294,9 @@ duration=
 url=
 mail=
 password=
+title=
+artist=
+year=
 output=
 
 # Argument none?
@@ -304,7 +307,7 @@ if [ $# -lt 1 ]; then
 fi
 
 # Parse argument
-while getopts s:f:t:d:m:u:p:o: option; do
+while getopts s:f:t:d:m:u:p:T:a: option; do
   case "${option}" in
     s)
       station_id="${OPTARG}"
@@ -327,8 +330,11 @@ while getopts s:f:t:d:m:u:p:o: option; do
     p)
       password="${OPTARG}"
       ;;
-    o)
-      output="${OPTARG}"
+    T)
+      title="${OPTARG}"
+      ;;
+    a)
+      artist="${OPTARG}"
       ;;
     \?)
       show_usage
@@ -478,19 +484,23 @@ if [ ${ret} -ne 0 ]; then
   exit 1
 fi
 
-# Generate default file path
-if [ -z "${output}" ]; then
-  output="${station_id}_${fromtime}_${totime}.m4a"
-else
-  # Fix file path extension
-  echo "${output}" | grep -q "\\.m4a$"
-  ret=$?
+# Generate file path
+yyyymmdd=${fromtime:0:8}
+hour=${fromtime:8:2}
+suffix=
+# 夜中なら前日の日付
+case $hour in
+    0[0123])
+        sec=$((`date -d "${yyyymmdd}" +%s`-24*60*60))
+        suffix=`date -d @$sec +%Y%m%d`
+        ;;
+    *)
+        suffix=${yyyymmdd}
+        ;;
+esac
+output="${title}-${suffix}.mp3"
 
-  if [ ${ret} -ne 0 ]; then
-    # Add .m4a
-    output="${output}.m4a"
-  fi
-fi
+year=${fromtime:0:4}
 
 # Record
 ffmpeg \
@@ -498,9 +508,10 @@ ffmpeg \
     -fflags +discardcorrupt \
     -headers "X-Radiko-Authtoken: ${authtoken}" \
     -i "https://radiko.jp/v2/api/ts/playlist.m3u8?station_id=${station_id}&l=15&ft=${fromtime}00&to=${totime}00" \
-    -acodec copy \
-    -vn \
-    -bsf:a aac_adtstoasc \
+    -b:a 128k \
+    -metadata title=$title \
+    -metadata artist=$artist \
+    -metadata year=$year \
     -y \
     "${output}"
 ret=$?
@@ -513,4 +524,5 @@ fi
 
 # Finish
 finalize
+mv /public/${output}
 exit 0
