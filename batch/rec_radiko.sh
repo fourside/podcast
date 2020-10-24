@@ -168,8 +168,7 @@ rm -f ${channel}.xml
 # rtmpdump
 #
 flv="${output}.flv"
-rtmpdump -v \
-         -r ${url_parts[0]} \
+rtmpdump -r ${url_parts[0]} \
          --app ${url_parts[1]} \
          --playpath ${url_parts[2]} \
          -W $playerurl \
