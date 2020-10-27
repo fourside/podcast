@@ -1,6 +1,6 @@
 require 'aws-sdk'
 
-url = env['SQS_URL']
+url = ENV['SQS_URL']
 
 sqs = Aws::SQS::Client.new(region: 'ap-northeast-1')
 
