@@ -9,7 +9,7 @@ RUN apk add --no-cache \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
     && bundle install --path=bin --without development test --deployment \
     && crontab ./crontab \
-    && ln -s /dev/stdout /var/log/cron.log \
-    && mkdir ../public
+    && chmod +x ./rec_radiko_ts.sh \
+    && ln -s /dev/stdout /var/log/cron.log
 
 CMD ["crond", "-f", "-L", "/var/log/cron.log"]
