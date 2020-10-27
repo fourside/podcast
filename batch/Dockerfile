@@ -24,6 +24,7 @@ COPY --from=builder /usr/local/bin/swfextract /usr/local/bin/
 
 RUN apk add --no-cache \
         bash wget perl libxml2-utils rtmpdump ffmpeg ruby curl \
+    && gem install aws-sdk \
     && crontab ./crontab \
     && ln -s /dev/stdout /var/log/cron.log \
     && mkdir ../public
