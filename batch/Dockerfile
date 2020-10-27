@@ -1,6 +1,6 @@
 FROM alpine:3.11.2 as builder
 
-WORKDIR work
+WORKDIR /work
 
 RUN apk add --no-cache --virtual .build-deps \
         gcc make libc-dev zlib-dev tzdata \
@@ -16,7 +16,7 @@ RUN apk add --no-cache --virtual .build-deps \
 
 FROM alpine:3.11.2
 
-WORKDIR work
+WORKDIR /work
 
 COPY . .
 COPY --from=builder /etc/localtime /etc/
