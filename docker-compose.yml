@@ -38,6 +38,17 @@ services:
         target: /public
         read_only: false
 
+  timefree:
+    build: ./timefree
+    image: "${APP}_timefree:${TAG}"
+    volumes:
+      - type: volume
+        source: PUBLIC_DIR
+        target: /public
+        read_only: false
+    environment:
+        - SQS_URL=${SQS_URL}
+
 volumes:
   FEEDER_SOCKET_DIR:
   PUBLIC_DIR:
