@@ -47,9 +47,10 @@ services:
         target: /public
         read_only: false
     environment:
-        - SQS_URL=${SQS_URL}
+        - SQS_URL
+        - AWS_ACCESS_KEY_ID
+        - AWS_SECRET_ACCESS_KEY
 
 volumes:
   FEEDER_SOCKET_DIR:
   PUBLIC_DIR:
-
