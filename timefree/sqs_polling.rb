@@ -1,3 +1,4 @@
+require 'shellwords'
 require 'aws-sdk'
 
 url = ENV['SQS_URL']
@@ -11,8 +12,8 @@ resp.messages.each do |m|
   stationId = body["stationId"]
   fromTime = body["fromTime"]
   duration = body["duration"]
-  title = body["title"]
-  personality = body["personality"]
+  title = Shellwords.escape(body["title"])
+  personality = Shellwords.escape(body["personality"])
   command = "./rec_radiko_ts.sh -s #{stationId} -f #{fromTime} -d #{duration} -T #{title} -a #{personality}"
   puts command
   spawn command
