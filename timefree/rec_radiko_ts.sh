@@ -524,5 +524,5 @@ fi
 
 # Finish
 finalize
-mv /public/${output}
+mv ${output} /public
 exit 0
