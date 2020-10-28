@@ -13,6 +13,7 @@ resp.messages.each do |m|
   duration = body["duration"]
   title = body["title"]
   personality = body["personality"]
+  puts "./rec_radiko_ts.sh -s #{stationId} -f #{fromTime} -d #{duration} -T #{title} -a #{personality}"
   spawn "./rec_radiko_ts.sh -s #{stationId} -f #{fromTime} -d #{duration} -T #{title} -a #{personality}"
   sqs.delete_message(queue_url: url, receipt_handle: m.receipt_handle)
 end
