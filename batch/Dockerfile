@@ -1,6 +1,6 @@
 FROM alpine:3.11.2 as builder
 
-WORKDIR work
+WORKDIR /work
 
 RUN apk add --no-cache --virtual .build-deps \
         gcc make libc-dev zlib-dev tzdata \
@@ -16,14 +16,14 @@ RUN apk add --no-cache --virtual .build-deps \
 
 FROM alpine:3.11.2
 
-WORKDIR work
+WORKDIR /work
 
 COPY . .
 COPY --from=builder /etc/localtime /etc/
 COPY --from=builder /usr/local/bin/swfextract /usr/local/bin/
 
 RUN apk add --no-cache \
-        bash wget perl libxml2-utils rtmpdump ffmpeg ruby curl \
+        bash wget perl libxml2-utils rtmpdump ffmpeg ruby \
     && crontab ./crontab \
     && ln -s /dev/stdout /var/log/cron.log \
     && mkdir ../public

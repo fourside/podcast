@@ -1,6 +1,6 @@
 FROM ruby:2.6-alpine3.8 as builder
 
-WORKDIR work
+WORKDIR /work
 
 COPY Gemfile* ./
 
