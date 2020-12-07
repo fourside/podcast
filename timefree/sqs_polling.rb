@@ -16,6 +16,7 @@ resp.messages.each do |m|
   personality = Shellwords.escape(body["personality"])
   command = "./rec_radiko_ts.sh -s #{stationId} -f #{fromTime} -d #{duration} -T #{title} -a #{personality}"
   puts command
-  spawn command
+  spawend = spawn command
   sqs.delete_message(queue_url: url, receipt_handle: m.receipt_handle)
+  Process.wait spawend
 end
