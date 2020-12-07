@@ -1,5 +1,6 @@
 require 'shellwords'
 require 'aws-sdk'
+require 'time'
 
 url = ENV['SQS_URL']
 
@@ -9,8 +10,11 @@ resp = sqs.receive_message(queue_url: url, max_number_of_messages: 10, wait_time
 
 resp.messages.each do |m|
   body = JSON.parse(m.body)
-  stationId = body["stationId"]
   fromTime = body["fromTime"]
+  if is_future(fromTime)
+    return
+  end
+  stationId = body["stationId"]
   duration = body["duration"]
   title = Shellwords.escape(body["title"])
   personality = Shellwords.escape(body["personality"])
@@ -19,4 +23,9 @@ resp.messages.each do |m|
   spawend = spawn command
   sqs.delete_message(queue_url: url, receipt_handle: m.receipt_handle)
   Process.wait spawend
+end
+
+def is_future fromTime
+  from = Time.parse(fromTime)
+  from > Time.now
 end
