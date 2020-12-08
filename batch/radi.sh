@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Japan internet radio live streaming recoder
 # Copyright (C) 2019 uru (https://twitter.com/uru_2)
