@@ -29,6 +29,8 @@ Options:
   -m ADDRESS      Radiko premium mail address
   -p PASSWORD     Radiko premium password
   -o FILEPATH     Output file path
+  -T title        Program title
+  -a artist       Program personality
 _EOT_
 }
 
