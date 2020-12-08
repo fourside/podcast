@@ -2,6 +2,12 @@ require 'shellwords'
 require 'aws-sdk'
 require 'time'
 
+def is_future fromTime, duration
+  from = Time.parse(fromTime)
+  to = from + (duration.to_i * 60)
+  to > Time.now
+end
+
 url = ENV['SQS_URL']
 
 sqs = Aws::SQS::Client.new(region: 'ap-northeast-1')
@@ -23,10 +29,4 @@ resp.messages.each do |m|
   spawend = spawn command
   sqs.delete_message(queue_url: url, receipt_handle: m.receipt_handle)
   Process.wait spawend
-end
-
-def is_future fromTime, duration
-  from = Time.parse(fromTime)
-  to = from + (duration.to_i * 60)
-  to > Time.now
 end
