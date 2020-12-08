@@ -1,11 +1,11 @@
 SHELL=/bin/bash
 PATH=/usr/local/bin:/bin:/usr/bin
-28 8  * * 1-4 /work/radi.sh -t radiko -s TBS -d 160 -T らじおと -a 伊集院光                  && mv /work/*.mp3 /public
-58 0  * * 2   /work/radi.sh -t radiko -s TBS -d 130 -T 伊集院光深夜の馬鹿力 -a 伊集院光       && mv /work/*.mp3 /public
-55 14 * * 2   /work/radi.sh -t radiko -s TBS -d  35 -T 町山智浩たまむすび -a 町山智浩         && mv /work/*.mp3 /public
-58 0  * * 3   /work/radi.sh -t radiko -s TBS -d 130 -T 爆笑問題カーボーイ -a 爆笑問題         && mv /work/*.mp3 /public
-58 0  * * 6   /work/radi.sh -t radiko -s TBS -d 125 -T バナナムーン -a バナナマン             && mv /work/*.mp3 /public
-58 20 * * 4   /work/radi.sh -t radiko -s TBS -d  34 -T マイゲーム・マイライフ -a ライムスター宇多丸     && mv /work/*.mp3 /public
-58 17 * * 1-5 /work/radi.sh -t radiko -s TBS -d 184 -T アフター6ジャンクション -a ライムスター宇多丸     && mv /work/*.mp3 /public
-58 0  * * 0   /work/radi.sh -t radiko -s TBS -d 125 -T エレ片のコント太郎 -a エレキコミック・片桐仁      && mv /work/*.mp3 /public
+28 8  * * 1-4 cd /work && ./radi.sh -t radiko -s TBS -d 160 -T らじおと -a 伊集院光                  && mv ./*.mp3 /public
+58 0  * * 2   cd /work && ./radi.sh -t radiko -s TBS -d 130 -T 伊集院光深夜の馬鹿力 -a 伊集院光       && mv ./*.mp3 /public
+55 14 * * 2   cd /work && ./radi.sh -t radiko -s TBS -d  35 -T 町山智浩たまむすび -a 町山智浩         && mv ./*.mp3 /public
+58 0  * * 3   cd /work && ./radi.sh -t radiko -s TBS -d 130 -T 爆笑問題カーボーイ -a 爆笑問題         && mv ./*.mp3 /public
+58 0  * * 6   cd /work && ./radi.sh -t radiko -s TBS -d 125 -T バナナムーン -a バナナマン             && mv ./*.mp3 /public
+58 20 * * 4   cd /work && ./radi.sh -t radiko -s TBS -d  34 -T マイゲーム・マイライフ -a ライムスター宇多丸     && mv ./*.mp3 /public
+58 17 * * 1-5 cd /work && ./radi.sh -t radiko -s TBS -d 184 -T アフター6ジャンクション -a ライムスター宇多丸     && mv ./*.mp3 /public
+58 0  * * 0   cd /work && ./radi.sh -t radiko -s TBS -d 125 -T エレ片のコント太郎 -a エレキコミック・片桐仁      && mv ./*.mp3 /public
 0  0  * * *   find /public/ -mtime +15 | xargs rm
