@@ -445,9 +445,7 @@ if [ "${type}" = "radiko" ]; then
       -fflags +discardcorrupt \
       -headers "X-Radiko-Authtoken: ${radiko_authtoken}" \
       -i "${playlist_uri}" \
-      -acodec copy \
-      -vn \
-      -bsf:a aac_adtstoasc \
+      -b:a 128k \
       -y \
       -t "$(format_time "${duration}")" \
       "${output}"
