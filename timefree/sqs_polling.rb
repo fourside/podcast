@@ -11,11 +11,11 @@ resp = sqs.receive_message(queue_url: url, max_number_of_messages: 10, wait_time
 resp.messages.each do |m|
   body = JSON.parse(m.body)
   fromTime = body["fromTime"]
-  if is_future(fromTime)
+  duration = body["duration"]
+  if is_future(fromTime, duration)
     return
   end
   stationId = body["stationId"]
-  duration = body["duration"]
   title = Shellwords.escape(body["title"])
   personality = Shellwords.escape(body["personality"])
   command = "./rec_radiko_ts.sh -s #{stationId} -f #{fromTime} -d #{duration} -T #{title} -a #{personality}"
@@ -25,7 +25,8 @@ resp.messages.each do |m|
   Process.wait spawend
 end
 
-def is_future fromTime
+def is_future fromTime, duration
   from = Time.parse(fromTime)
-  from > Time.now
+  to = from + (duration.to_i * 60)
+  to > Time.now
 end
