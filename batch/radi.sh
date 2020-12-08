@@ -27,6 +27,8 @@ Options:
   -o FILEPATH     Output file path
   -i ADDRESS      login mail address (radiko only)
   -p PASSWORD     login password (radiko only)
+  -T title        Program title
+  -a artist       Program personality
   -l              Show all station ID list
 _EOT_
 }
@@ -299,6 +301,8 @@ duration=0
 output=""
 login_id=""
 login_password=""
+title=""
+artist=""
 while getopts t:s:d:o:i:p:l option; do
   case "${option}" in
     t)
@@ -310,14 +314,17 @@ while getopts t:s:d:o:i:p:l option; do
     d)
       duration="${OPTARG}"
       ;;
-    o)
-      output="${OPTARG}"
-      ;;
     i)
       login_id="${OPTARG}"
       ;;
     p)
       login_password="${OPTARG}"
+      ;;
+    T)
+      title="${OPTARG}"
+      ;;
+    a)
+      artist="${OPTARG}"
       ;;
     l)
       show_all_stations
@@ -372,20 +379,22 @@ else
 fi
 
 # Generate default file path
-file_ext="m4a"
-if [ "${type}" = "shiburadi" ]; then
-  file_ext="mp3"
-fi
-if [ -z "${output}" ]; then
-  output="${station_id}_$(date +%Y%m%d%H%M%S).${file_ext}"
-else
-  # Fix file path extension
-  echo "${output}" | grep -q -E "\\.${file_ext}$"
-  ret=$?
-  if [ ${ret} -ne 0 ]; then
-    output="${output}.${file_ext}"
-  fi
-fi
+
+# 夜中なら前日の日付
+suffix=""
+hour=`date '+%H'`
+case $hour in
+    0[0123])
+        sec=$((`date +%s`-24*60*60))
+        suffix=`date -d @$sec +%Y%m%d`
+        ;;
+    *)
+        suffix=`date '+%Y%m%d'`
+        ;;
+esac
+
+year=${suffix:0:4}
+output="${title}-${suffix}.mp3"
 
 playlist_uri=""
 radiko_session=""
@@ -458,6 +467,9 @@ elif [ "${type}" = "shiburadi" ]; then
       -vn \
       -y \
       -t "$(format_time "${duration}")" \
+      -metadata title=$title \
+      -metadata artist=$artist \
+      -metadata year=$year \
       "${output}"
 else
   ffmpeg \
