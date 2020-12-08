@@ -303,7 +303,7 @@ login_id=""
 login_password=""
 title=""
 artist=""
-while getopts t:s:d:o:i:p:l option; do
+while getopts t:s:d:o:i:p:T:a:l option; do
   case "${option}" in
     t)
       type="${OPTARG}"
