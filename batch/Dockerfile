@@ -5,7 +5,7 @@ WORKDIR /work
 COPY . .
 
 RUN apk add --no-cache \
-        bash curl tzdata libxml2-utils ffmpeg jq \
+        bash curl tzdata libxml2-utils ffmpeg jq  coreutils \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
     && chmod +x ./radi.sh \
     && crontab ./crontab \

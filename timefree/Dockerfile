@@ -5,7 +5,7 @@ WORKDIR /work
 COPY . .
 
 RUN apk add --no-cache \
-        bash curl perl tzdata libxml2-utils ffmpeg \
+        bash curl perl tzdata libxml2-utils ffmpeg coreutils \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
     && bundle install --path=bin --without development test --deployment \
     && crontab ./crontab \
