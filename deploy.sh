@@ -5,6 +5,11 @@ if [[ ! "${SQS_URL+set}" ]]; then
   exit 1
 fi
 
+if [[ ! "${DEAD_LETTER_SQS_URL+set}" ]]; then
+  echo "set env DEAD_LETTER_SQS_URL"
+  exit 1
+fi
+
 if [[ ! "${AWS_ACCESS_KEY_ID+set}" ]]; then
   echo "set env AWS_ACCESS_KEY_ID"
   exit 1
