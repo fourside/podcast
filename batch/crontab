@@ -7,5 +7,5 @@ PATH=/usr/local/bin:/bin:/usr/bin
 58 0  * * 6   cd /work && ./radi.sh -t radiko -s TBS -d 125 -T バナナムーン -a バナナマン             && mv ./*.mp3 /public
 58 20 * * 4   cd /work && ./radi.sh -t radiko -s TBS -d  34 -T マイゲーム・マイライフ -a ライムスター宇多丸     && mv ./*.mp3 /public
 58 17 * * 1-5 cd /work && ./radi.sh -t radiko -s TBS -d 184 -T アフター6ジャンクション -a ライムスター宇多丸     && mv ./*.mp3 /public
-58 0  * * 0   cd /work && ./radi.sh -t radiko -s TBS -d 125 -T エレ片のコント太郎 -a エレキコミック・片桐仁      && mv ./*.mp3 /public
+58 0  * * 0   cd /work && ./radi.sh -t radiko -s TBS -d 65 -T エレ片のケツビ -a エレキコミック・片桐仁      && mv ./*.mp3 /public
 0  0  * * *   find /public/ -mtime +15 | xargs rm
