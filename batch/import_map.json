@@ -1,6 +1,7 @@
 {
   "imports": {
     "std/testing": "https://deno.land/std@0.119.0/testing/asserts.ts",
-    "std/flags": "https://deno.land/std@0.119.0/flags/mod.ts"
+    "std/flags": "https://deno.land/std@0.119.0/flags/mod.ts",
+    "std/encoding/base64": "https://deno.land/std@0.119.0/encoding/base64.ts"
   }
 }
