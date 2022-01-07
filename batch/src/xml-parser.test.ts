@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.119.0/testing/asserts.ts";
+import { assertEquals } from "std/testing";
 import { getPlaylistUriFromXml } from "./xml-parser.ts";
 
 Deno.test("parse xml and get uri", () => {
