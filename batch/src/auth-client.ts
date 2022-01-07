@@ -1,7 +1,7 @@
 import { encode } from "std/encoding/base64";
 import { RecRadikoError } from "./rec-radiko-error.ts";
 
-type RadikoToken = string;
+type AuthToken = string;
 
 //   Define authorize key value (from http://radiko.jp/apps/js/playerCommon.js)
 const RADIKO_AUTHKEY_VALUE = "bcd151073c03b352e1ef2fd66c32209da9ca0afa";
@@ -12,7 +12,7 @@ type Auth1Headers = {
   "keyLength": string;
 };
 
-export async function authorize(): Promise<RadikoToken> {
+export async function authorize(): Promise<AuthToken> {
   // Authorize 1
   const auth1Response = await fetch("https://radiko.jp/v2/api/auth1", {
     headers: {
@@ -22,6 +22,7 @@ export async function authorize(): Promise<RadikoToken> {
       "X-Radiko-User": "dummy_user",
     },
   });
+  console.debug("Auth1 response headers", auth1Response.headers);
 
   const auth1Headers = Array.from(auth1Response.headers).reduce<
     Partial<Auth1Headers>
@@ -33,7 +34,7 @@ export async function authorize(): Promise<RadikoToken> {
       if (key.toLowerCase() === "x-radiko-keyoffset") {
         acc["keyOffset"] = value;
       }
-      if (key.toLowerCase() === "x-radiko-error-keylength") {
+      if (key.toLowerCase() === "x-radiko-keylength") {
         acc["keyLength"] = value;
       }
       return acc;
@@ -68,6 +69,7 @@ export async function authorize(): Promise<RadikoToken> {
       "X-Radiko-PartialKey": partialKey,
     },
   });
+  console.debug("Auth2 response headers", auth2Response.headers);
   if (!auth2Response.ok) {
     console.error(auth2Response);
     throw new RecRadikoError("auth2 response is not ok");
