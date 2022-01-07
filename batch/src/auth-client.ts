@@ -57,7 +57,7 @@ export async function authorize(): Promise<AuthToken> {
   }
 
   const partialKey = encode(
-    RADIKO_AUTHKEY_VALUE.substring(keyOffset, keyLength),
+    RADIKO_AUTHKEY_VALUE.substring(keyOffset, keyOffset + keyLength),
   );
 
   // # Authorize 2
