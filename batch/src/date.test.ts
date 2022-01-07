@@ -1,5 +1,8 @@
 import { assertEquals } from "std/testing";
-import { getDateIfMidnightThenSubtracted } from "./date.ts";
+import {
+  formatTimeForFfmpeg,
+  getDateIfMidnightThenSubtracted,
+} from "./date.ts";
 
 Deno.test("夜中でなければ同じDate", () => {
   // arrange
@@ -48,4 +51,13 @@ Deno.test("夜中で年初なら前年になる", () => {
   assertEquals(result.getDate(), 31);
   assertEquals(result.getHours(), date.getHours());
   assertEquals(result.getMinutes(), date.getMinutes());
+});
+
+Deno.test("FFMPEG用のtimeフォーマット", () => {
+  // arrange
+  const duration = 150;
+  // act
+  const result = formatTimeForFfmpeg(duration);
+  // assert
+  assertEquals(result, "023000");
 });

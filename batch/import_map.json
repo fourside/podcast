@@ -4,6 +4,7 @@
     "std/flags": "https://deno.land/std@0.119.0/flags/mod.ts",
     "std/encoding/base64": "https://deno.land/std@0.119.0/encoding/base64.ts",
     "std/datetime": "https://deno.land/std@0.119.0/datetime/mod.ts",
+    "std/fmt/printf": "https://deno.land/std@0.119.0/fmt/printf.ts",
     "x/xml": "https://deno.land/x/xml@2.0.3/mod.ts"
   }
 }
