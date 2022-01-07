@@ -1,4 +1,5 @@
 import { parse } from "x/xml";
+import { RecRadikoError } from "./rec-radiko-error.ts";
 
 type PlaylistUrl = string;
 
@@ -6,21 +7,21 @@ export function getPlaylistUriFromXml(xml: string): PlaylistUrl {
   const parsedXml = parse(xml);
   const urls = parsedXml.urls;
   if (!isNode(urls)) {
-    throw new Error("urls is not found");
+    throw new RecRadikoError("urls is not found");
   }
   const urlList = urls.url;
   if (!Array.isArray(urlList)) {
-    throw new Error("urls is not found");
+    throw new RecRadikoError("urls is not found");
   }
   const areaFreeUrls = urlList.filter((url) => url["@areafree"] === 0);
-  const targetUrl = areaFreeUrls[1];
+  const targetUrl = areaFreeUrls[0];
   if (!isNode(targetUrl)) {
-    throw new Error("area-free second url is not found");
+    throw new RecRadikoError("area-free second url is not found");
   }
 
   const playListUrl = targetUrl.playlist_create_url;
   if (typeof playListUrl !== "string") {
-    throw new Error("playlist_create_url is not found");
+    throw new RecRadikoError("playlist_create_url is not found");
   }
   return playListUrl;
 }
