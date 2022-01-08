@@ -6,12 +6,13 @@ ARG :=
 
 .DEFAULT_GOAL: $(NAME)
 
-${NAME}: clean setup
-	deno run --unstable --allow-run --allow-net --allow-env --import-map import_map.json ${ENTRY_POINT} ${ARG}
+${NAME}: clean setup run
 
 setup:
 	git config --local core.hooksPath githooks
 
+run:
+	deno run --unstable --allow-run --allow-net --allow-env --import-map import_map.json ${ENTRY_POINT} ${ARG}
 
 test:
 	deno test --import-map import_map.json
