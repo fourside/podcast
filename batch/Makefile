@@ -9,11 +9,9 @@ ARG :=
 ${NAME}: clean setup
 	deno run --unstable --allow-run --allow-net --allow-env --import-map import_map.json ${ENTRY_POINT} ${ARG}
 
-setup: clean
+setup:
 	git config --local core.hooksPath githooks
 
-clean:
-	
 
 test:
 	deno test --import-map import_map.json
