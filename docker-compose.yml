@@ -37,6 +37,8 @@ services:
         source: PUBLIC_DIR
         target: /public
         read_only: false
+    environment:
+        - SLACK_WEBHOOK_URL
 
   timefree:
     build: ./timefree

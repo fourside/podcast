@@ -1,11 +1,11 @@
-FROM alpine:3.12.1
+FROM denoland/deno:alpine-1.17.2
 
 WORKDIR /work
 
 COPY . .
 
 RUN apk add --no-cache \
-        bash curl tzdata libxml2-utils ffmpeg jq  coreutils \
+        bash curl tzdata libxml2-utils ffmpeg jq coreutils make \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
     && chmod +x ./radi.sh \
     && crontab ./crontab \

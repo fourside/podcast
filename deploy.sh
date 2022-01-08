@@ -1,4 +1,10 @@
 #!/bin/bash
+
+if [[ ! "${SLACK_WEBHOOK_URL+set}" ]]; then
+  echo "set env SLACK_WEBHOOK_URL"
+  exit 1
+fi
+
 set -e
 if [[ ! "${SQS_URL+set}" ]]; then
   echo "set env SQS_URL"
