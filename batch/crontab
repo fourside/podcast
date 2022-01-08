@@ -1,11 +1,11 @@
 SHELL=/bin/bash
 PATH=/usr/local/bin:/bin:/usr/bin
-28 8  * * 1-4 cd /work && make ARG="-s TBS -d 160 -t らじおと -a 伊集院光"                  && mv ./*.mp3 /public
-58 0  * * 2   cd /work && make ARG="-s TBS -d 130 -t 伊集院光深夜の馬鹿力 -a 伊集院光"       && mv ./*.mp3 /public
-55 14 * * 2   cd /work && make ARG="-s TBS -d  35 -t 町山智浩たまむすび -a 町山智浩"         && mv ./*.mp3 /public
-58 0  * * 3   cd /work && make ARG="-s TBS -d 130 -t 爆笑問題カーボーイ -a 爆笑問題"         && mv ./*.mp3 /public
-58 0  * * 6   cd /work && make ARG="-s TBS -d 125 -t バナナムーン -a バナナマン"             && mv ./*.mp3 /public
-58 20 * * 4   cd /work && make ARG="-s TBS -d  34 -t マイゲーム・マイライフ -a ライムスター宇多丸"     && mv ./*.mp3 /public
-58 17 * * 1-5 cd /work && make ARG="-s TBS -d 184 -t アフター6ジャンクション -a ライムスター宇多丸"     && mv ./*.mp3 /public
-58 0  * * 0   cd /work && make ARG="-s TBS -d 65 -t エレ片のケツビ -a エレキコミック・片桐仁"      && mv ./*.mp3 /public
+28 8  * * 1-4 cd /work && make run ARG="-s TBS -d 160 -t らじおと -a 伊集院光"                  && mv ./*.mp3 /public
+58 0  * * 2   cd /work && make run ARG="-s TBS -d 130 -t 伊集院光深夜の馬鹿力 -a 伊集院光"       && mv ./*.mp3 /public
+55 14 * * 2   cd /work && make run ARG="-s TBS -d  35 -t 町山智浩たまむすび -a 町山智浩"         && mv ./*.mp3 /public
+58 0  * * 3   cd /work && make run ARG="-s TBS -d 130 -t 爆笑問題カーボーイ -a 爆笑問題"         && mv ./*.mp3 /public
+58 0  * * 6   cd /work && make run ARG="-s TBS -d 125 -t バナナムーン -a バナナマン"             && mv ./*.mp3 /public
+58 20 * * 4   cd /work && make run ARG="-s TBS -d  34 -t マイゲーム・マイライフ -a ライムスター宇多丸"     && mv ./*.mp3 /public
+58 17 * * 1-5 cd /work && make run ARG="-s TBS -d 184 -t アフター6ジャンクション -a ライムスター宇多丸"     && mv ./*.mp3 /public
+58 0  * * 0   cd /work && make run ARG="-s TBS -d 65 -t エレ片のケツビ -a エレキコミック・片桐仁"      && mv ./*.mp3 /public
 0  0  * * *   find /public/ -mtime +15 | xargs rm
