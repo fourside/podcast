@@ -7,16 +7,25 @@ type ReturnValue = {
   exitCode: 0 | -1;
 } | {
   exit: false;
+  timeFree: false;
   station: string;
   duration: number;
   title: string;
   artist: string;
+} | {
+  exit: false;
+  timeFree: true;
+  station: string;
+  duration: number;
+  title: string;
+  artist: string;
+  fromTime: string;
 };
 
 const commandName = "rec_radiko";
 
 export function parseArgs(args: string[]): ReturnValue {
-  const parsed = parse(args);
+  const parsed = parse(args, { string: ["fromTime", "f"] });
   if (parsed.version || parsed.v) {
     console.log(`${commandName} version: ${version.version}`);
     return { exit: true, exitCode: 0 };
@@ -25,6 +34,7 @@ export function parseArgs(args: string[]): ReturnValue {
     showUsage();
     return { exit: true, exitCode: 0 };
   }
+
   const station = parsed.station || parsed.s;
   if (station === undefined) {
     console.log("station not be passed via --station or -s");
@@ -54,7 +64,30 @@ export function parseArgs(args: string[]): ReturnValue {
     return { exit: true, exitCode: -1 };
   }
 
-  return { exit: false, station, duration, title, artist };
+  const subCommand = parsed._[0] + "";
+  if (subCommand !== "timefree") {
+    return { exit: false, timeFree: false, station, duration, title, artist };
+  }
+
+  const fromTime = parsed.fromTime || parsed.f;
+  if (fromTime === undefined) {
+    console.log("fromTime not be passed via --fromTime or -f");
+    return { exit: true, exitCode: -1 };
+  }
+  if (!/^\d{12}$/.test(fromTime)) {
+    console.log("fromTime must be 12 digits");
+    return { exit: true, exitCode: -1 };
+  }
+
+  return {
+    exit: false,
+    timeFree: true,
+    station,
+    duration,
+    title,
+    artist,
+    fromTime: fromTime,
+  };
 }
 
 function showUsage() {

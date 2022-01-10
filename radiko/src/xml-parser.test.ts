@@ -29,6 +29,6 @@ Deno.test("parse xml and get uri", () => {
   // assert
   assertEquals(
     result,
-    "https://radiko.jp/v2/api/playlist_create/TBS?l=300",
+    "http://f-radiko.smartstream.ne.jp/TBS/_definst_/simul-stream.stream/playlist.m3u8",
   );
 });

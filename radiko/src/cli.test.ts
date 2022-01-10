@@ -71,6 +71,7 @@ Deno.test("normal long option", () => {
   assertEquals(result.duration, 60);
   assertEquals(result.title, "タイトル1");
   assertEquals(result.artist, "アーティスト1");
+  assertEquals(result.timeFree, false);
 });
 
 Deno.test("normal short option", () => {
@@ -86,6 +87,7 @@ Deno.test("normal short option", () => {
   assertEquals(result.duration, 120);
   assertEquals(result.title, "タイトル2");
   assertEquals(result.artist, "アーティスト2");
+  assertEquals(result.timeFree, false);
 });
 
 Deno.test("duration not number", () => {
@@ -98,4 +100,34 @@ Deno.test("duration not number", () => {
   assertEquals(result.exit, true);
   assert(result.exit === true);
   assertEquals(result.exitCode, -1);
+});
+
+Deno.test("timefree", () => {
+  // arrange
+  const args = [
+    "timefree",
+    "-s",
+    "TBS",
+    "-d",
+    "30",
+    "-t",
+    "タイトル",
+    "-a",
+    "アーティスト",
+    "-f",
+    "201901011200",
+  ];
+  // act
+  const result = parseArgs(args);
+
+  // assert
+  assertEquals(result.exit, false);
+  assert(result.exit === false);
+  assert(result.timeFree === true);
+  assertEquals(result.timeFree, true);
+  assertEquals(result.station, "TBS");
+  assertEquals(result.duration, 30);
+  assertEquals(result.title, "タイトル");
+  assertEquals(result.artist, "アーティスト");
+  assertEquals(result.fromTime, "201901011200");
 });
