@@ -1,5 +1,6 @@
 import { formatTimeForFfmpeg } from "./date.ts";
 import { RecRadikoError } from "./rec-radiko-error.ts";
+import { moveSync } from "std/fs";
 
 export type RecordMeta = {
   station: string;
@@ -42,6 +43,7 @@ export async function record(
   console.log("ffmpeg:", status);
   if (status.success) {
     console.log(new TextDecoder().decode(stdout));
+    moveFile(recordMeta.outputFileName, "/public");
   } else {
     const error = new TextDecoder().decode(stderr);
     throw new RecRadikoError(error);
@@ -87,6 +89,7 @@ export async function recordTimefree(
   console.log("ffmpeg:", status);
   if (status.success) {
     console.log(new TextDecoder().decode(stdout));
+    moveFile(recordMeta.outputFileName, "/public");
   } else {
     const error = new TextDecoder().decode(stderr);
     throw new RecRadikoError(error);
@@ -104,4 +107,8 @@ async function runPipedProcess(cmd: string[]): Promise<
   ]);
   process.close();
   return { status, stdout, stderr };
+}
+
+function moveFile(filePath: string, targetPath: string): void {
+  moveSync(filePath, targetPath);
 }
