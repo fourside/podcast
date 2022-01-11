@@ -13,6 +13,11 @@ import { getPlaylistUriFromXml } from "./xml-parser.ts";
 import { sendMessageToSlack } from "./slack-client.ts";
 
 export async function main(args: string[]) {
+  const webhookUrl = Deno.env.get("SLACK_WEBHOOK_URL");
+  if (webhookUrl === undefined) {
+    throw new Error("SLACK_WEBHOOK_URL is not passed.");
+  }
+
   const result = parseArgs(args);
   if (result.exit) {
     Deno.exit(result.exitCode);
@@ -35,7 +40,7 @@ export async function main(args: string[]) {
   } catch (error) {
     console.error("record failed.", error);
     try {
-      await sendMessageToSlack(error.message, title, artist);
+      await sendMessageToSlack(webhookUrl, error.message, title, artist);
     } catch (slackError) {
       console.error("Send slack failed.", slackError);
     }
@@ -47,7 +52,7 @@ export async function main(args: string[]) {
   } catch (error) {
     console.error("record failed.", error);
     try {
-      await sendMessageToSlack(error.message, title, artist);
+      await sendMessageToSlack(webhookUrl, error.message, title, artist);
     } catch (slackError) {
       console.error("Send slack failed.", slackError);
     }
