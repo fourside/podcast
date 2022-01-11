@@ -7,6 +7,7 @@
     "std/fmt/printf": "https://deno.land/std@0.119.0/fmt/printf.ts",
     "x/aws_api/client": "https://deno.land/x/aws_api@v0.5.0/client/mod.ts",
     "x/aws_api/sqs": "https://deno.land/x/aws_api@v0.5.0/services/sqs/mod.ts",
+    "x/zod": "https://deno.land/x/zod@v3.11.6/mod.ts",
     "x/xml": "https://deno.land/x/xml@2.0.3/mod.ts"
   }
 }
