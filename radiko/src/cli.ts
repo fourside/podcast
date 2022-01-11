@@ -7,19 +7,10 @@ type ReturnValue = {
   exitCode: 0 | -1;
 } | {
   exit: false;
-  timeFree: false;
   station: string;
   duration: number;
   title: string;
   artist: string;
-} | {
-  exit: false;
-  timeFree: true;
-  station: string;
-  duration: number;
-  title: string;
-  artist: string;
-  fromTime: string;
 };
 
 const commandName = "rec_radiko";
@@ -64,30 +55,7 @@ export function parseArgs(args: string[]): ReturnValue {
     return { exit: true, exitCode: -1 };
   }
 
-  const subCommand = parsed._[0] + "";
-  if (subCommand !== "timefree") {
-    return { exit: false, timeFree: false, station, duration, title, artist };
-  }
-
-  const fromTime = parsed.fromTime || parsed.f;
-  if (fromTime === undefined) {
-    console.log("fromTime not be passed via --fromTime or -f");
-    return { exit: true, exitCode: -1 };
-  }
-  if (!/^\d{12}$/.test(fromTime)) {
-    console.log("fromTime must be 12 digits");
-    return { exit: true, exitCode: -1 };
-  }
-
-  return {
-    exit: false,
-    timeFree: true,
-    station,
-    duration,
-    title,
-    artist,
-    fromTime: fromTime,
-  };
+  return { exit: false, station, duration, title, artist };
 }
 
 function showUsage() {

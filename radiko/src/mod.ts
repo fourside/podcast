@@ -1,13 +1,8 @@
 import { authorize } from "./auth-client.ts";
-import {
-  addMinutes,
-  formatTimefreeDateTime,
-  getDateIfMidnightThenSubtracted,
-  parseAsFromTime,
-} from "./date.ts";
+import { getDateIfMidnightThenSubtracted } from "./date.ts";
 import { parseArgs } from "./cli.ts";
 import { getOutputFilename } from "./output-filename.ts";
-import { record, recordTimefree } from "./recorder.ts";
+import { record } from "./recorder.ts";
 import { getPlaylistXml } from "./xml-client.ts";
 import { getPlaylistUriFromXml } from "./xml-parser.ts";
 import { sendMessageToSlack } from "./slack-client.ts";
@@ -23,19 +18,9 @@ export async function main(args: string[]) {
     Deno.exit(result.exitCode);
   }
   console.log("record start.", args, new Date());
-  const { station, duration, title, artist, timeFree } = result;
+  const { station, duration, title, artist } = result;
   try {
-    if (timeFree) {
-      await timefree({
-        station,
-        duration,
-        title,
-        artist,
-        fromTime: result.fromTime,
-      });
-    } else {
-      await batch({ station, duration, title, artist });
-    }
+    await batch({ station, duration, title, artist });
     console.log("record end.", new Date());
   } catch (error) {
     console.error("record failed.", error);
@@ -85,25 +70,6 @@ async function batch(recordValue: RecordValue): Promise<void> {
     authToken,
     playListUrl,
   );
-}
-
-async function timefree(
-  recordValue: RecordValue & { fromTime: string },
-): Promise<void> {
-  const authToken = await authorize();
-  const fromDate = parseAsFromTime(recordValue.fromTime);
-  const recordDate = getDateIfMidnightThenSubtracted(fromDate);
-  const toDate = addMinutes(fromDate, recordValue.duration);
-
-  await recordTimefree({
-    station: recordValue.station,
-    title: recordValue.title,
-    artist: recordValue.artist,
-    fromTime: formatTimefreeDateTime(fromDate),
-    toTime: formatTimefreeDateTime(toDate),
-    year: recordDate.getFullYear(),
-    outputFileName: getOutputFilename(recordValue.title, recordDate),
-  }, authToken);
 }
 
 if (import.meta.main) {
