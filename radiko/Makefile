@@ -2,6 +2,7 @@
 
 NAME := rec_radiko
 ENTRY_POINT := src/mod.ts
+SQS_ENTRY_POINT := src/sqs/mod.ts
 ARG :=
 
 .DEFAULT_GOAL: $(NAME)
@@ -13,6 +14,9 @@ setup:
 
 run:
 	deno run --unstable --allow-run --allow-net --allow-env --import-map import_map.json ${ENTRY_POINT} ${ARG}
+
+sqs:
+	deno run --unstable --allow-run --allow-net --allow-env --import-map import_map.json ${SQS_ENTRY_POINT} ${ARG}
 
 test:
 	deno test --import-map import_map.json
