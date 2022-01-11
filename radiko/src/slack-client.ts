@@ -1,14 +1,11 @@
 import { formatDateTime } from "./date.ts";
 
 export async function sendMessageToSlack(
+  webhookUrl: string,
   message: string,
   title: string,
   artist: string,
 ): Promise<void> {
-  const webhookUrl = Deno.env.get("SLACK_WEBHOOK_URL");
-  if (webhookUrl === undefined) {
-    throw new Error("SLACK_WEBHOOK_URL is not passed.");
-  }
   const blocks = buildBlockKit(
     "Failure of recording",
     title,
@@ -38,6 +35,58 @@ function buildBlockKit(
     "text": {
       "type": "mrkdwn",
       "text": `${headerText}\n*${title}*/*${artist}*`,
+    },
+  };
+  const messageBlock: SectionBlock = {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "```" + message + "```",
+    },
+  };
+  const dateContextBlock: ContextBlock = {
+    "type": "context",
+    "elements": [
+      {
+        "type": "plain_text",
+        "text": formatDateTime(date),
+      },
+    ],
+  };
+  return {
+    blocks: [titleAndArtistBlock, messageBlock, dateContextBlock],
+  };
+}
+
+export async function sendTimefreeErrorMessageToSlack(
+  webhookUrl: string,
+  errorMessage: string,
+): Promise<void> {
+  const blocks = buildTimefreeErrorBlockKit(
+    "Failure of Timefree recording",
+    errorMessage,
+    new Date(),
+  );
+  const response = await fetch(webhookUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(blocks),
+  });
+  console.log("Send Slack response.", response);
+}
+
+function buildTimefreeErrorBlockKit(
+  headerText: string,
+  message: string,
+  date: Date,
+): Blocks {
+  const titleAndArtistBlock: SectionBlock = {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": `${headerText}`,
     },
   };
   const messageBlock: SectionBlock = {
