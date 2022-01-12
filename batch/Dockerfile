@@ -2,8 +2,8 @@ FROM denoland/deno:alpine-1.17.2
 
 WORKDIR /work
 
-COPY ./radiko .
-COPY ./batch/* .
+COPY ./radiko ./
+COPY ./batch/* ./
 
 RUN apk add --no-cache \
         bash curl tzdata libxml2-utils ffmpeg jq coreutils make \
