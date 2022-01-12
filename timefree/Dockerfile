@@ -1,15 +1,14 @@
-FROM ruby:2.6-alpine3.8
+FROM denoland/deno:alpine-1.17.2
 
 WORKDIR /work
 
-COPY . .
+COPY ./radiko .
+COPY ./timefree .
 
 RUN apk add --no-cache \
-        bash curl perl tzdata libxml2-utils ffmpeg coreutils \
+        bash curl perl tzdata libxml2-utils ffmpeg coreutils make \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
-    && bundle install --path=bin --without development test --deployment \
     && crontab ./crontab \
-    && chmod +x ./rec_radiko_ts.sh \
     && ln -s /dev/stdout /var/log/cron.log
 
 CMD ["crond", "-f", "-L", "/var/log/cron.log"]
