@@ -16,7 +16,7 @@ type ReturnValue = {
 const commandName = "rec_radiko";
 
 export function parseArgs(args: string[]): ReturnValue {
-  const parsed = parse(args, { string: ["fromTime", "f"] });
+  const parsed = parse(args);
   if (parsed.version || parsed.v) {
     console.log(`${commandName} version: ${version.version}`);
     return { exit: true, exitCode: 0 };
