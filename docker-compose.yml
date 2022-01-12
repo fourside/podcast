@@ -30,8 +30,10 @@ services:
         read_only: true
 
   batch:
-    build: ./batch
     image: "${APP}_batch:${TAG}"
+    build:
+      dockerfile: ./batch/Dockerfile
+      context: .
     volumes:
       - type: volume
         source: PUBLIC_DIR
@@ -41,7 +43,9 @@ services:
         - SLACK_WEBHOOK_URL
 
   timefree:
-    build: ./timefree
+    build:
+      dockerfile: ./timefree/Dockerfile
+      context: .
     image: "${APP}_timefree:${TAG}"
     volumes:
       - type: volume
@@ -53,6 +57,7 @@ services:
         - DEAD_LETTER_SQS_URL
         - AWS_ACCESS_KEY_ID
         - AWS_SECRET_ACCESS_KEY
+        - SLACK_WEBHOOK_URL
 
 volumes:
   FEEDER_SOCKET_DIR:
