@@ -43,7 +43,7 @@ export async function record(
   console.log("ffmpeg:", status);
   if (status.success) {
     console.log(new TextDecoder().decode(stdout));
-    moveFile(recordMeta.outputFileName, "/public");
+    moveFile(recordMeta.outputFileName, `/public/${recordMeta.outputFileName}`);
   } else {
     const error = new TextDecoder().decode(stderr);
     throw new RecRadikoError(error);
@@ -89,7 +89,7 @@ export async function recordTimefree(
   console.log("ffmpeg:", status);
   if (status.success) {
     console.log(new TextDecoder().decode(stdout));
-    moveFile(recordMeta.outputFileName, "/public");
+    moveFile(recordMeta.outputFileName, `/public/${recordMeta.outputFileName}`);
   } else {
     const error = new TextDecoder().decode(stderr);
     throw new RecRadikoError(error);
