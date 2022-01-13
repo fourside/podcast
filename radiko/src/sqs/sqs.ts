@@ -1,5 +1,6 @@
 import { ApiFactory } from "x/aws_api/client";
 import { SQS } from "x/aws_api/sqs";
+import { RecRadikoError } from "../rec-radiko-error.ts";
 
 type Credentials = {
   awsAccessKeyId: string;
@@ -50,7 +51,7 @@ export async function receiveMessage(
       });
     }
     if (result.error !== undefined) {
-      console.error("error", result.error);
+      throw new RecRadikoError(result.error.message);
     }
   }
 }
