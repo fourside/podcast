@@ -31,18 +31,6 @@ export async function main(args: string[]) {
     }
     Deno.exit(-1);
   }
-
-  try {
-    console.log("record end.", new Date());
-  } catch (error) {
-    console.error("record failed.", error);
-    try {
-      await sendMessageToSlack(webhookUrl, error.message, title, artist);
-    } catch (slackError) {
-      console.error("Send slack failed.", slackError);
-    }
-    Deno.exit(-1);
-  }
 }
 
 type RecordValue = {
