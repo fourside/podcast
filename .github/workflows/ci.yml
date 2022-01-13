@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "radiko/**"
+  pull_request:
+    paths:
+      - "radiko/**"
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Run fmt
+        run: deno fmt --check
+        working-directory: ./radiko
+
+      - name: Lint
+        run: make lint
+        working-directory: ./radiko
+
+      - name: Test
+        run: make test
+        working-directory: ./radiko
