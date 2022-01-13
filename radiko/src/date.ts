@@ -12,7 +12,7 @@ export function getDateIfMidnightThenSubtracted(date: Date): Date {
 export function formatTimeForFfmpeg(duration: number): string {
   const hour = Math.floor(duration / 60);
   const min = duration % 60;
-  return sprintf("%02d%02d%02d", hour, min, 0);
+  return sprintf("%02d:%02d:%02d", hour, min, 0);
 }
 
 export function formatDateTime(date: Date): string {

@@ -62,7 +62,7 @@ Deno.test("FFMPEG用のtimeフォーマット", () => {
   // act
   const result = formatTimeForFfmpeg(duration);
   // assert
-  assertEquals(result, "023000");
+  assertEquals(result, "02:30:00");
 });
 
 Deno.test("parseAsFromTime", () => {
