@@ -1,6 +1,6 @@
 import { formatTimeForFfmpeg } from "./date.ts";
 import { RecRadikoError } from "./rec-radiko-error.ts";
-import { moveSync } from "std/fs";
+import { copySync } from "std/fs/copy";
 
 export type RecordMeta = {
   station: string;
@@ -110,5 +110,6 @@ async function runPipedProcess(cmd: string[]): Promise<
 }
 
 function moveFile(filePath: string, targetPath: string): void {
-  moveSync(filePath, targetPath);
+  copySync(filePath, targetPath);
+  Deno.removeSync(filePath);
 }

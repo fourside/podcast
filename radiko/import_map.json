@@ -5,7 +5,7 @@
     "std/encoding/base64": "https://deno.land/std@0.119.0/encoding/base64.ts",
     "std/datetime": "https://deno.land/std@0.119.0/datetime/mod.ts",
     "std/fmt/printf": "https://deno.land/std@0.119.0/fmt/printf.ts",
-    "std/fs": "https://deno.land/std@0.119.0/fs/mod.ts",
+    "std/fs/copy": "https://deno.land/std@0.119.0/fs/copy.ts",
     "x/aws_api/client": "https://deno.land/x/aws_api@v0.5.0/client/mod.ts",
     "x/aws_api/sqs": "https://deno.land/x/aws_api@v0.5.0/services/sqs/mod.ts",
     "x/zod": "https://deno.land/x/zod@v3.11.6/mod.ts",
