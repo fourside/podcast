@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
+    "build": "tsc",
+    "start": "node dist",
     "lint": "eslint src --ext ts,tsx",
     "test": "mocha"
   },
