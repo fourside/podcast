@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { formatRfc822 } from "./day";
 import { getPodcastFiles } from "./podcast-file";
 
 interface Props {
@@ -12,13 +13,13 @@ export function Feed(props: Props): ReactElement<Props> {
       <channel>
         <description>private podcast</description>
         <title>private podcast</title>
-        <pubDate>{new Date().toString()}</pubDate>
+        <pubDate>{formatRfc822(new Date())}</pubDate>
         {files.map((item, index) => (
           <item key={index}>
             <title>{item.title}</title>
             <description>{item.description}</description>
             <enclosure url={`${props.baseUrl}/mp3/${encodeURI(item.filePath)}`} length={item.fileSize} type={"audio/mpeg"} />
-            <pubDate>{item.mtime.toString()}</pubDate>
+            <pubDate>{formatRfc822(item.mtime)}</pubDate>
           </item>
         ))}
       </channel>
