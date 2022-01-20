@@ -1,7 +1,11 @@
 import { ReactElement } from "react";
 import { getPodcastFiles } from "./podcast-file";
 
-export function Feed(): ReactElement {
+interface Props {
+  baseUrl: string;
+}
+
+export function Feed(props: Props): ReactElement<Props> {
   const files = getPodcastFiles(process.env.NODE_ENV === "production" ? "/public" : "./mock-data");
   return (
     <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
@@ -13,7 +17,7 @@ export function Feed(): ReactElement {
           <item key={index}>
             <title>{item.title}</title>
             <description>{item.description}</description>
-            <enclosure url={encodeURI(item.filePath)} length={item.fileSize} type={"audio/mpeg"} />
+            <enclosure url={`${props.baseUrl}/mp3/${encodeURI(item.filePath)}`} length={item.fileSize} type={"audio/mpeg"} />
             <pubDate>{item.mtime.toString()}</pubDate>
           </item>
         ))}
