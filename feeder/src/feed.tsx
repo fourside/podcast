@@ -19,7 +19,11 @@ export function Feed(props: Props): ReactElement<Props> {
           <item key={index}>
             <title>{item.title}</title>
             <description>{item.description}</description>
-            <enclosure url={`${props.baseUrl}/mp3/${encodeURI(item.fileName)}`} length={item.fileSize} type={"audio/mpeg"} />
+            <enclosure
+              url={`${props.baseUrl}/mp3/${encodeURI(item.fileName)}`}
+              length={item.fileSize}
+              type={"audio/mpeg"}
+            />
             <pubDate>{formatRfc822(item.mtime)}</pubDate>
           </item>
         ))}

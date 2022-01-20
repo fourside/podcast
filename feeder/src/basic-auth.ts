@@ -1,4 +1,4 @@
-import type { Request, Response, NextFunction} from "express";
+import type { Request, Response, NextFunction } from "express";
 import { Env } from "./env";
 
 export function basicAuth(req: Request, res: Response, next: NextFunction): void {
