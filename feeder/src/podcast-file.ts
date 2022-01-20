@@ -4,7 +4,7 @@ import * as path from "path";
 export type PodcastFile = {
   title: string;
   description: string;
-  filePath: string;
+  fileName: string;
   fileSize: number;
   mtime: Date;
 };
@@ -20,7 +20,7 @@ export function getPodcastFiles(dir: string, ext = ".mp3"): PodcastFile[] {
       return {
         title: basename,
         description: basename,
-        filePath: path.join(dir, dirent.name),
+        fileName: `${basename}.${ext}`,
         fileSize: stats.size,
         mtime: stats.mtime,
       };

@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { formatRfc822 } from "./day";
+import { Env } from "./env";
 import { getPodcastFiles } from "./podcast-file";
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
 }
 
 export function Feed(props: Props): ReactElement<Props> {
-  const files = getPodcastFiles(process.env.NODE_ENV === "production" ? "/public" : "./mock-data");
+  const files = getPodcastFiles(Env.getEnv() === "production" ? "/public" : "./mock-data");
   return (
     <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
       <channel>
@@ -18,7 +19,7 @@ export function Feed(props: Props): ReactElement<Props> {
           <item key={index}>
             <title>{item.title}</title>
             <description>{item.description}</description>
-            <enclosure url={`${props.baseUrl}/mp3/${encodeURI(item.filePath)}`} length={item.fileSize} type={"audio/mpeg"} />
+            <enclosure url={`${props.baseUrl}/mp3/${encodeURI(item.fileName)}`} length={item.fileSize} type={"audio/mpeg"} />
             <pubDate>{formatRfc822(item.mtime)}</pubDate>
           </item>
         ))}
