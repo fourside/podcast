@@ -6,7 +6,7 @@ export type PodcastFile = {
   description: string;
   filePath: string;
   fileSize: number;
-  mtime: string;
+  mtime: Date;
 };
 
 export function getPodcastFiles(dir: string, ext = ".mp3"): PodcastFile[] {
@@ -22,7 +22,8 @@ export function getPodcastFiles(dir: string, ext = ".mp3"): PodcastFile[] {
         description: basename,
         filePath: path.join(dir, dirent.name),
         fileSize: stats.size,
-        mtime: stats.mtime.toString(),
+        mtime: stats.mtime,
       };
-    });
+    })
+    .sort((a, b) => b.mtime.getTime() - a.mtime.getTime());
 }
