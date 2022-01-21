@@ -1,16 +1,16 @@
-import express from "express";
-import helmet from "helmet";
-import { basicAuth } from "./basic-auth";
+import { buildApp } from "./app";
 import { Env } from "./env";
-import { router } from "./router";
 
-const app = express();
-app.use(helmet());
-app.use("/", basicAuth);
-app.use("/", router);
-
-const port = Env.getPort();
-
-app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
-});
+try {
+  const port = Env.getPort();
+  buildApp().listen(port, "0.0.0.0", (err, address) => {
+    if (err !== null) {
+      console.error(err);
+      process.exit(1);
+    }
+    console.log(`Server listening on ${address}`);
+  });
+} catch (error) {
+  console.error(error);
+  process.exit(-1);
+}
