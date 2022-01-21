@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
     "build": "tsc",
-    "start": "node dist/",
+    "start": "NODE_ENV=production node dist/",
     "lint": "eslint src --ext ts,tsx",
     "check": "npm run lint && npm run test && tsc --noEmit",
     "prebuild": "node -e 'fs.rmSync(`dist`, {recursive: true, force: true})'",
