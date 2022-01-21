@@ -1,4 +1,4 @@
-name: ci
+name: ci feeder
 
 on:
   push:
@@ -25,12 +25,16 @@ jobs:
 
       - name: Setup dependencies
         run: npm ci
+        working-directory: ./feeder
 
       - name: Lint
         run: npm run lint
+        working-directory: ./feeder
 
       - name: Unit tests
         run: npm test
+        working-directory: ./feeder
 
       - name: Build
         run: npm run build
+        working-directory: ./feeder
