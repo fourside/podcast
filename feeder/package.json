@@ -8,6 +8,7 @@
     "build": "tsc",
     "start": "node dist/",
     "lint": "eslint src --ext ts,tsx",
+    "prebuild": "node -e 'fs.rmSync(`dist`, {recursive: true, force: true})'",
     "test": "mocha"
   },
   "author": "",
