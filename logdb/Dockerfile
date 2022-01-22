@@ -1,2 +1,2 @@
-FROM mongo:3.7.9-jessie
+FROM mongo:4.4.11
 
