@@ -12,7 +12,7 @@ export type PodcastFile = {
 
 export function getPodcastFiles(dir: string, ext = ".mp3"): PodcastFile[] {
   if (Env.getEnv() === "development") {
-    generateMockData();
+    generateMockData(dir);
   }
   return fs
     .readdirSync(dir, { withFileTypes: true })
@@ -36,11 +36,10 @@ export function getPodcastFiles(dir: string, ext = ".mp3"): PodcastFile[] {
  * 開発環境でモックデータ用ディレクトリがないときはファイル生成する
  * @returns
  */
-function generateMockData(): void {
+function generateMockData(dir: string): void {
   if (Env.getEnv() !== "development") {
     return;
   }
-  const dir = Env.getFileDir();
   if (fs.existsSync(dir)) {
     return;
   }
