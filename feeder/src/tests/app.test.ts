@@ -16,8 +16,8 @@ describe("app", () => {
 
   it("should response by authenticated user", async () => {
     // arrange
-    process.env.USER = "test_user";
-    process.env.PASSWORD = "test_password";
+    process.env.FEEDER_USER = "test_user";
+    process.env.FEEDER_PASSWORD = "test_password";
     const app = buildApp();
     // act
     const response = await app.inject({
@@ -28,6 +28,6 @@ describe("app", () => {
       },
     });
     // assert
-    assert.equal(response.statusCode, 200);
+    assert.equal(response.statusCode, 200, response.body);
   });
 });

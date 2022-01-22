@@ -6,14 +6,14 @@ export const Env = {
   getFeederUser(): string {
     const user = process.env.FEEDER_USER;
     if (user === undefined) {
-      throw new Error("USER environment variable is not set");
+      throw new Error("FEEDER_USER environment variable is not set");
     }
     return user;
   },
   getFeederPassword(): string {
     const password = process.env.FEEDER_PASSWORD;
     if (password === undefined) {
-      throw new Error("PASSWORD environment variable is not set");
+      throw new Error("FEEDER_PASSWORD environment variable is not set");
     }
     return password;
   },
