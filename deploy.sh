@@ -26,6 +26,16 @@ if [[ ! "${AWS_SECRET_ACCESS_KEY+set}" ]]; then
   exit 1
 fi
 
+if [[ ! "${FEEDER_USER+set}" ]]; then
+  echo "set env FEEDER_USER"
+  exit 1
+fi
+
+if [[ ! "${FEEDER_PASSWORD+set}" ]]; then
+  echo "set env FEEDER_PASSWORD"
+  exit 1
+fi
+
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml build
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml down
