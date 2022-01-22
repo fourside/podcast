@@ -16,15 +16,15 @@ describe("app", () => {
 
   it("should response by authenticated user", async () => {
     // arrange
-    process.env.USER = "user";
-    process.env.PASSWORD = "password";
+    process.env.USER = "test_user";
+    process.env.PASSWORD = "test_password";
     const app = buildApp();
     // act
     const response = await app.inject({
       method: "GET",
       url: "/feed",
       headers: {
-        authorization: "Basic " + Buffer.from("user:password").toString("base64"),
+        authorization: "Basic " + Buffer.from("test_user:test_password").toString("base64"),
       },
     });
     // assert
