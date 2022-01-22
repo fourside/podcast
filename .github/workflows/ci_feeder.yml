@@ -35,8 +35,8 @@ jobs:
         run: npm test
         working-directory: ./feeder
         env:
-          USER: test_user
-          PASSWORD: test_password
+          FEEDER_USER: test_user
+          FEEDER_PASSWORD: test_password
           TZ: Asia/Tokyo
 
       - name: Build

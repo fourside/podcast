@@ -14,8 +14,8 @@
   - `export AWS_ACCESS_KEY_ID=xxxxxxxxxx`
   - `export AWS_SECRET_ACCESS_KEY=xxxxxxx`
   - `export SLACK_WEBHOOK_URL=xxxxxxx`
-  - `export USER=xxxxxxx`
-  - `export PASSWORD=xxxxxxx`
+  - `export FEEDER_USER=xxxxxxx`
+  - `export FEEDER_PASSWORD=xxxxxxx`
 
 ## docker version
 

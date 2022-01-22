@@ -12,8 +12,8 @@ services:
         target: /public
         read_only: true
     environment:
-        - USER
-        - PASSWORD
+        - FEEDER_USER
+        - FEEDER_PASSWORD
 
   nginx:
     build: ./nginx

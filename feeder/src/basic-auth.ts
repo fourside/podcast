@@ -10,7 +10,7 @@ export function basicAuth(request: FastifyRequest, reply: FastifyReply, done: Ho
   if (auth !== undefined && auth.toLocaleLowerCase().startsWith("basic ")) {
     const [, base64] = auth.split(" ");
     const [username, password] = Buffer.from(base64, "base64").toString().split(":");
-    if (username === Env.getAllowedUser() && password === Env.getAllowedPassword()) {
+    if (username === Env.getFeederUser() && password === Env.getFeederPassword()) {
       done();
     } else {
       reply.status(401).send("Unauthorized");

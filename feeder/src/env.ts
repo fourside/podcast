@@ -3,15 +3,15 @@ export const Env = {
     const port = process.env.PORT;
     return port === undefined ? 3000 : parseInt(port, 10);
   },
-  getAllowedUser(): string {
-    const user = process.env.USER;
+  getFeederUser(): string {
+    const user = process.env.FEEDER_USER;
     if (user === undefined) {
       throw new Error("USER environment variable is not set");
     }
     return user;
   },
-  getAllowedPassword(): string {
-    const password = process.env.PASSWORD;
+  getFeederPassword(): string {
+    const password = process.env.FEEDER_PASSWORD;
     if (password === undefined) {
       throw new Error("PASSWORD environment variable is not set");
     }
