@@ -24,7 +24,7 @@ export function getPodcastFiles(dir: string, ext = ".mp3"): PodcastFile[] {
       return {
         title: basename,
         description: basename,
-        fileName: `${basename}.${ext}`,
+        fileName: `${basename}${ext}`,
         fileSize: stats.size,
         mtime: stats.mtime,
       };
@@ -45,7 +45,9 @@ function generateMockData(dir: string): void {
   }
   fs.mkdirSync(dir);
   ["file-1", "file-2", "file-3", "ファイル1"].forEach((fileName, index) => {
-    const suffix = `${new Date().getFullYear()}${new Date().getMonth() + 1}${new Date().getDate()}`;
+    const suffix = `${new Date().getFullYear()}${new Date().getMonth() + 1}${
+      new Date().getDate()
+    }`;
     fs.writeFileSync(path.join(dir, `${fileName}-${suffix}.mp3`), "test");
     const atime = new Date(Date.now() - 1000 * 60 * 24);
     const mtime = new Date(Date.now() + 1000 * 60 * 24 * index);
