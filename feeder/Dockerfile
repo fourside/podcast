@@ -1,30 +1,29 @@
-FROM ruby:2.6-alpine3.8 as builder
+FROM node:16-alpine3.14 as builder
 
-WORKDIR /work
+RUN apk add --no-cache libc6-compat tzdata \
+    && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
-COPY Gemfile* ./
+WORKDIR /app
 
-RUN apk add --no-cache --virtual .ruby-builddeps \
-        gcc make libc-dev linux-headers tzdata \
-    && mkdir bin \
-    && bundle install --path=bin --without development test --deployment \
-    && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
-    && apk del .ruby-builddeps
+COPY . ./
+
+RUN npm ci
+RUN npm run build
 
 
-FROM ruby:2.6-alpine3.8
+FROM node:16-alpine3.14 as runner
 
-ENV APP_ROOT /app
+WORKDIR /app
 
-WORKDIR $APP_ROOT
+ENV NODE_ENV production
 
-COPY . .
-COPY --from=builder /work/bin ./bin
-COPY --from=builder /usr/local/bundle/config /usr/local/bundle/
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nodejs -u 1001
+
+COPY package* ./
+RUN npm ci --production && mkdir dist
+
+COPY --from=builder /app/dist ./dist
 COPY --from=builder /etc/localtime /etc/localtime
 
-RUN ln -s /dev/stdout ${APP_ROOT}/logs/unicorn.log \
-    && ln -s /dev/stderr ${APP_ROOT}/logs/unicorn_err.log
-
-CMD ["bundle", "exec", "unicorn", "-c", "config/unicorn.conf.rb"]
-
+CMD ["npm", "start"]
