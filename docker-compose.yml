@@ -14,6 +14,8 @@ services:
     environment:
         - FEEDER_USER
         - FEEDER_PASSWORD
+    networks:
+        - reverse_proxy
 
   nginx:
     build: ./nginx
@@ -25,6 +27,8 @@ services:
         source: PUBLIC_DIR
         target: /public/mp3
         read_only: true
+    networks:
+        - reverse_proxy
 
   batch:
     image: "${APP}_batch:${TAG}"
@@ -58,3 +62,5 @@ services:
 
 volumes:
   PUBLIC_DIR:
+networks:
+  reverse_proxy:
