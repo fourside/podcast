@@ -8,7 +8,7 @@ interface Props {
 }
 
 export function Feed(props: Props): ReactElement<Props> {
-  const files = getPodcastFiles(Env.getEnv() === "production" ? "/public" : "./mock-data");
+  const files = getPodcastFiles(Env.getFileDir());
   return (
     <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
       <channel>

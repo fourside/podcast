@@ -20,4 +20,7 @@ export const Env = {
   getEnv(): "production" | "development" {
     return process.env.NODE_ENV === "production" ? "production" : "development";
   },
+  getFileDir(): string {
+    return process.env.NODE_ENV === "production" ? "/public" : "./mock-data";
+  },
 };
