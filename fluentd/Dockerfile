@@ -1,4 +1,4 @@
-FROM fluent/fluentd:v1.3-1
+FROM fluent/fluentd:v1.14-1
 
 USER root
 
