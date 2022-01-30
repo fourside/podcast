@@ -1,3 +1,5 @@
+import path from "path/posix";
+
 export const Env = {
   getPort(): number {
     const port = process.env.PORT;
@@ -22,5 +24,8 @@ export const Env = {
   },
   getFileDir(): string {
     return process.env.NODE_ENV === "production" ? "/public" : "./mock-data";
+  },
+  getDistDir(): string {
+    return path.join(__dirname, "../dist");
   },
 };
