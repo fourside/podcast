@@ -1,4 +1,4 @@
-export function renderHtml(renderedComponent: string): string {
+export function renderHtml(renderedComponent: string, data: unknown): string {
   const indexHtml = `
 <!DOCTYPE html>
 <html>
@@ -12,7 +12,10 @@ export function renderHtml(renderedComponent: string): string {
     </div>
     <script defer src="/js/client.js"></script>
   </body>
+  <script id="__DATA__" type="application/json">
+#{Data}
+  </script>
 </html>
 `;
-  return indexHtml.replace(/\n|  /g, "").replace("#{App}", renderedComponent);
+  return indexHtml.replace(/\n|  /g, "").replace("#{App}", renderedComponent).replace("#{Data}", JSON.stringify(data));
 }

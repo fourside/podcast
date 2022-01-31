@@ -5,13 +5,15 @@ import { Index } from "./components";
 import { Feed } from "./feed";
 import { getClientSideJs } from "./client-side-js";
 import { renderHtml } from "./render-html";
+import { getDiscFreeOfDevDevice } from "./df-dev-device";
 
 const xmlDocType = '<?xml version="1.0" encoding="UTF-8"?>';
 
 export async function routes(fastify: FastifyInstance): Promise<void> {
-  fastify.get("/", (request, reply) => {
-    const markup = renderToString(<Index />);
-    const html = renderHtml(markup);
+  fastify.get("/", async (request, reply) => {
+    const dfByDevices = await getDiscFreeOfDevDevice();
+    const markup = renderToString(<Index dfByDevices={dfByDevices} />);
+    const html = renderHtml(markup, dfByDevices);
     reply.header("Content-Type", "text/html").send(html);
   });
   fastify.get<{ Params: JsPathParams }>("/js/:jsFile", (request, reply) => {
