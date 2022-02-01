@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { ReactElement } from "react";
 import { DiscFreeOfDevDevice } from "../df-dev-device";
+import { Devices } from "./devices";
 
 interface Props {
   dfByDevices: DiscFreeOfDevDevice[];
@@ -19,24 +20,7 @@ export function Index(props: Props): ReactElement {
         <button onClick={handleClick}>click</button>
       </div>
       <div>count: {count}</div>
-      {props.dfByDevices.map((device) => (
-        <div key={device.name}>
-          <div>{device.name}</div>
-          <div>{prettyByte(device.availableBytes)}</div>
-        </div>
-      ))}
+      <Devices dfByDevices={props.dfByDevices} />
     </div>
   );
-}
-
-const k = 1024;
-const decimals = 2;
-const units = ["Bytes", "KB", "MB", "GB", "TB"];
-
-function prettyByte(bytes: number): string {
-  if (bytes === 0) {
-    return "0 Bytes";
-  }
-  const unitIndex = Math.floor(Math.log(bytes) / Math.log(k));
-  return `${parseFloat((bytes / Math.pow(k, unitIndex)).toFixed(decimals))} ${units[unitIndex]}`;
 }
