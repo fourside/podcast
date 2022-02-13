@@ -1,4 +1,4 @@
-import React, { VFC } from "react";
+import React, { CSSProperties, VFC } from "react";
 import { DiscFreeOfDevDevice } from "../df-dev-device";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 
 export const Devices: VFC<Props> = (props) => {
   return (
-    <div className="devices">
+    <div style={devicesStyle}>
       {props.dfByDevices.map((device) => (
         <div key={device.name}>
           <div>{device.name}</div>
@@ -16,6 +16,11 @@ export const Devices: VFC<Props> = (props) => {
       ))}
     </div>
   );
+};
+
+const devicesStyle: CSSProperties = {
+  display: "flex",
+  gap: "16px",
 };
 
 const k = 1024;
