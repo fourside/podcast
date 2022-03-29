@@ -6,7 +6,7 @@ COPY ./radiko ./
 COPY ./batch/* ./
 
 RUN apk add --no-cache \
-        tzdata ffmpeg make \
+        tzdata ffmpeg make bash \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
     && crontab ./crontab \
     && ln -s /dev/stdout /var/log/cron.log \
