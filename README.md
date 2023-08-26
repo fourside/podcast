@@ -5,9 +5,7 @@
 
 ## usage
 
-- in development, `docker-compose up -d`
-- in production,
-  `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d`
+- run `docker-compose up -d`
 - set env as below:
   - `export SQS_URL=https://sqs.xxxxxxxxxxxxxx.amazonaws.com/xxx/xxx.fifo`
   - `export DEAD_LETTER_SQS_URL=https://sqs.xxxxxxxxxxxxxx.amazonaws.com/xxx/xxx.fifo`
