@@ -1,14 +1,14 @@
-import { ProcessMessageResult } from "./sqs.ts";
-import { MessageBodySchema } from "./schema.ts";
+import { authorize } from "../auth-client.ts";
 import {
   addMinutes,
   formatTimefreeDateTime,
   getDateIfMidnightThenSubtracted,
   parseAsFromTime,
 } from "../date.ts";
-import { recordTimefree } from "../recorder.ts";
 import { getOutputFilename } from "../output-filename.ts";
-import { authorize } from "../auth-client.ts";
+import { recordTimefree } from "../recorder.ts";
+import { MessageBodySchema } from "./schema.ts";
+import { ProcessMessageResult } from "./sqs.ts";
 
 export async function processMessage(
   messageBodyString: string,
@@ -27,6 +27,14 @@ export async function processMessage(
 
     const authToken = await authorize();
     const recordDate = getDateIfMidnightThenSubtracted(fromDate);
+    const fileName = getOutputFilename(messageBody.title, recordDate);
+
+    const isAlreadyRecoded = await fileExists(fileName);
+    if (isAlreadyRecoded) {
+      return {
+        shouldBeDeleted: true,
+      };
+    }
 
     await recordTimefree({
       station: messageBody.stationId,
@@ -35,7 +43,7 @@ export async function processMessage(
       fromTime: formatTimefreeDateTime(fromDate),
       toTime: formatTimefreeDateTime(toDate),
       year: fromDate.getFullYear(),
-      outputFileName: getOutputFilename(messageBody.title, recordDate),
+      outputFileName: fileName,
     }, authToken);
 
     return {
@@ -47,5 +55,15 @@ export async function processMessage(
       error: error.message,
       shouldBeDeleted: false,
     };
+  }
+}
+
+async function fileExists(fileName: string): Promise<boolean> {
+  const path = `/public/${fileName}`;
+  try {
+    const stat = await Deno.stat(path);
+    return stat.isFile;
+  } catch (_error) {
+    return false;
   }
 }
