@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node
         uses: denoland/setup-deno@v1
@@ -28,9 +28,9 @@ jobs:
         working-directory: ./radiko
 
       - name: Lint
-        run: make lint
+        run: deno lint
         working-directory: ./radiko
 
       - name: Test
-        run: make test
+        run: deno test
         working-directory: ./radiko
