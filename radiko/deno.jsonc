@@ -1,4 +1,11 @@
 {
+  "tasks": {
+    "run": "deno run --unstable --allow-run --allow-net --allow-env --allow-read --allow-write src/mod.ts",
+    "sqs": "deno run --unstable --allow-run --allow-net --allow-env --allow-read --allow-write src/sqs/mod.ts",
+    "test": "deno test",
+    "lint": "deno lint",
+    "format": "deno fmt"
+  },
   "imports": {
     "std/testing": "https://deno.land/std@0.119.0/testing/asserts.ts",
     "std/flags": "https://deno.land/std@0.119.0/flags/mod.ts",
