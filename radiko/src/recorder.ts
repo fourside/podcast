@@ -1,6 +1,6 @@
+import { copySync } from "std/fs/copy";
 import { formatTimeForFfmpeg } from "./date.ts";
 import { RecRadikoError } from "./rec-radiko-error.ts";
-import { copySync } from "std/fs/copy";
 
 export type RecordMeta = {
   station: string;
@@ -16,8 +16,8 @@ export async function record(
   authToken: string,
   playListUrl: string,
 ): Promise<void> {
-  const commands = [
-    "ffmpeg",
+  const command = "ffmpeg";
+  const args = [
     "-loglevel",
     "error",
     "-fflags",
@@ -39,9 +39,8 @@ export async function record(
     `year=${recordMeta.year}`,
     recordMeta.outputFileName,
   ];
-  const { status, stdout, stderr } = await runPipedProcess(commands);
-  console.log("ffmpeg:", status);
-  if (status.success) {
+  const { success, stdout, stderr } = await runCommand(command, args);
+  if (success) {
     console.log(new TextDecoder().decode(stdout));
     moveFile(recordMeta.outputFileName, `/public/${recordMeta.outputFileName}`);
   } else {
@@ -64,8 +63,8 @@ export async function recordTimefree(
   recordMeta: RecordTimefreeMeta,
   authToken: string,
 ): Promise<void> {
-  const commands = [
-    "ffmpeg",
+  const command = "ffmpeg";
+  const args = [
     "-loglevel",
     "error",
     "-fflags",
@@ -85,9 +84,8 @@ export async function recordTimefree(
     `year=${recordMeta.year}`,
     recordMeta.outputFileName,
   ];
-  const { status, stdout, stderr } = await runPipedProcess(commands);
-  console.log("ffmpeg:", status);
-  if (status.success) {
+  const { success, stdout, stderr } = await runCommand(command, args);
+  if (success) {
     console.log(new TextDecoder().decode(stdout));
     moveFile(recordMeta.outputFileName, `/public/${recordMeta.outputFileName}`);
   } else {
@@ -96,17 +94,17 @@ export async function recordTimefree(
   }
 }
 
-async function runPipedProcess(cmd: string[]): Promise<
-  { status: Deno.ProcessStatus; stdout: Uint8Array; stderr: Uint8Array }
-> {
-  const process = Deno.run({ cmd, stdout: "piped", stderr: "piped" });
-  const [status, stdout, stderr] = await Promise.all([
-    process.status(),
-    process.output(),
-    process.stderrOutput(),
-  ]);
-  process.close();
-  return { status, stdout, stderr };
+async function runCommand(
+  commandStr: string,
+  args: string[],
+): Promise<{ success: boolean; stdout: Uint8Array; stderr: Uint8Array }> {
+  const command = new Deno.Command(commandStr, {
+    args,
+    stdout: "piped",
+    stderr: "piped",
+  });
+  const { success, stdout, stderr } = await command.output();
+  return { success, stdout, stderr };
 }
 
 function moveFile(filePath: string, targetPath: string): void {
