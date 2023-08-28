@@ -1,6 +1,6 @@
+import { sqsLogger as logger } from "../logger.ts";
 import { sendTimefreeErrorMessageToSlack } from "../slack-client.ts";
 import { Env } from "./env.ts";
-import { processMessage } from "./message-process.ts";
 import { createSqsClient, receiveMessage } from "./sqs.ts";
 
 export async function main(_: string[]) {
@@ -10,14 +10,14 @@ export async function main(_: string[]) {
   });
 
   try {
-    await receiveMessage(sqs, Env.queueUrl, processMessage);
-    await receiveMessage(sqs, Env.deadLetterQueueUrl, processMessage);
+    await receiveMessage(sqs, Env.queueUrl);
+    await receiveMessage(sqs, Env.deadLetterQueueUrl);
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     try {
       await sendTimefreeErrorMessageToSlack(Env.webhookUrl, error.message);
     } catch (slackError) {
-      console.error("Send slack failed.", slackError);
+      logger.error("Send slack failed.", slackError);
     }
     Deno.exit(-1);
   }

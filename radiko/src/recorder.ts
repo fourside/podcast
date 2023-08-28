@@ -1,5 +1,6 @@
 import { copySync } from "std/fs/copy";
 import { formatTimeForFfmpeg } from "./date.ts";
+import { batchLogger, sqsLogger } from "./logger.ts";
 import { RecRadikoError } from "./rec-radiko-error.ts";
 
 export type RecordMeta = {
@@ -41,7 +42,7 @@ export async function record(
   ];
   const { success, stdout, stderr } = await runCommand(command, args);
   if (success) {
-    console.log(new TextDecoder().decode(stdout));
+    batchLogger.info(new TextDecoder().decode(stdout));
     moveFile(recordMeta.outputFileName, `/public/${recordMeta.outputFileName}`);
   } else {
     const error = new TextDecoder().decode(stderr);
@@ -86,7 +87,7 @@ export async function recordTimefree(
   ];
   const { success, stdout, stderr } = await runCommand(command, args);
   if (success) {
-    console.log(new TextDecoder().decode(stdout));
+    sqsLogger.info(new TextDecoder().decode(stdout));
     moveFile(recordMeta.outputFileName, `/public/${recordMeta.outputFileName}`);
   } else {
     const error = new TextDecoder().decode(stderr);

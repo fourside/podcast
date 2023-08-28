@@ -1,5 +1,5 @@
-import { sprintf } from "std/fmt/printf";
 import { format, parse } from "std/datetime";
+import { sprintf } from "std/fmt/printf";
 
 export function getDateIfMidnightThenSubtracted(date: Date): Date {
   const hour = date.getHours();

@@ -1,4 +1,5 @@
 import { encode } from "std/encoding/base64";
+import { commonLogger as logger } from "./logger.ts";
 import { RecRadikoError } from "./rec-radiko-error.ts";
 
 type AuthToken = string;
@@ -22,7 +23,7 @@ export async function authorize(): Promise<AuthToken> {
       "X-Radiko-User": "dummy_user",
     },
   });
-  console.debug("Auth1 response headers", auth1Response.headers);
+  logger.debug("Auth1 response headers", auth1Response.headers);
 
   const auth1Headers = Array.from(auth1Response.headers).reduce<
     Partial<Auth1Headers>
@@ -46,13 +47,13 @@ export async function authorize(): Promise<AuthToken> {
     auth1Headers.keyOffset === undefined ||
     auth1Headers.keyLength === undefined
   ) {
-    console.error(auth1Headers);
+    logger.error(auth1Headers);
     throw new RecRadikoError("auth1 response is invalid");
   }
   const keyOffset = parseInt(auth1Headers.keyOffset, 10);
   const keyLength = parseInt(auth1Headers.keyLength, 10);
   if (isNaN(keyOffset) || isNaN(keyLength)) {
-    console.error({ keyOffset, keyLength });
+    logger.error({ keyOffset, keyLength });
     throw new RecRadikoError("keyOffset or keyLength is not a number");
   }
 
@@ -69,9 +70,9 @@ export async function authorize(): Promise<AuthToken> {
       "X-Radiko-PartialKey": partialKey,
     },
   });
-  console.debug("Auth2 response headers", auth2Response.headers);
+  logger.debug("Auth2 response headers", auth2Response.headers);
   if (!auth2Response.ok) {
-    console.error(auth2Response);
+    logger.error(auth2Response);
     throw new RecRadikoError("auth2 response is not ok");
   }
 

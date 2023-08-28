@@ -1,5 +1,6 @@
 import { parse } from "std/flags";
 
+import { batchLogger as logger } from "./logger.ts";
 import { version } from "./version.ts";
 
 type ReturnValue = {
@@ -18,7 +19,7 @@ const commandName = "rec_radiko";
 export function parseArgs(args: string[]): ReturnValue {
   const parsed = parse(args);
   if (parsed.version || parsed.v) {
-    console.log(`${commandName} version: ${version.version}`);
+    logger.info(`${commandName} version: ${version.version}`);
     return { exit: true, exitCode: 0 };
   }
   if (parsed.help || parsed.h) {
@@ -28,30 +29,30 @@ export function parseArgs(args: string[]): ReturnValue {
 
   const station = parsed.station || parsed.s;
   if (station === undefined) {
-    console.log("station not be passed via --station or -s");
+    logger.warning("station not be passed via --station or -s");
     return { exit: true, exitCode: -1 };
   }
 
   const durationString = parsed.duration || parsed.d;
   if (durationString === undefined) {
-    console.log("duration not be passed via --duration or -d");
+    logger.warning("duration not be passed via --duration or -d");
     return { exit: true, exitCode: -1 };
   }
   const duration = parseInt(durationString, 10);
   if (isNaN(duration)) {
-    console.log("duration is not a number:", durationString);
+    logger.warning("duration is not a number:", durationString);
     return { exit: true, exitCode: -1 };
   }
 
   const title = parsed.title || parsed.t;
   if (title === undefined) {
-    console.log("title not be passed via --title or -t");
+    logger.warning("title not be passed via --title or -t");
     return { exit: true, exitCode: -1 };
   }
 
   const artist = parsed.artist || parsed.a;
   if (artist === undefined) {
-    console.log("artist not be passed via --artist or -a");
+    logger.warning("artist not be passed via --artist or -a");
     return { exit: true, exitCode: -1 };
   }
 
@@ -59,7 +60,7 @@ export function parseArgs(args: string[]): ReturnValue {
 }
 
 function showUsage() {
-  console.log(
+  logger.info(
     `usage: ${commandName} --station <station> --duration <duration> --title <title> --artist <artist>`,
   );
 }
