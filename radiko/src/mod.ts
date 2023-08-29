@@ -1,6 +1,7 @@
 import { authorize } from "./auth-client.ts";
 import { parseArgs } from "./cli.ts";
 import { getDateIfMidnightThenSubtracted } from "./date.ts";
+import { Env } from "./env.ts";
 import { batchLogger as logger } from "./logger.ts";
 import { getOutputFilename } from "./output-filename.ts";
 import { record } from "./recorder.ts";
@@ -9,11 +10,6 @@ import { getPlaylistXml } from "./xml-client.ts";
 import { getPlaylistUriFromXml } from "./xml-parser.ts";
 
 export async function main(args: string[]) {
-  const webhookUrl = Deno.env.get("SLACK_WEBHOOK_URL");
-  if (webhookUrl === undefined) {
-    throw new Error("SLACK_WEBHOOK_URL is not passed.");
-  }
-
   const result = parseArgs(args);
   if (result.exit) {
     Deno.exit(result.exitCode);
@@ -26,7 +22,7 @@ export async function main(args: string[]) {
   } catch (error) {
     logger.error("record failed.", error);
     try {
-      await sendMessageToSlack(webhookUrl, error.message, title, artist);
+      await sendMessageToSlack(Env.webhookUrl, error.message, title, artist);
     } catch (slackError) {
       logger.error("Send slack failed.", slackError);
     }

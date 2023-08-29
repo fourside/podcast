@@ -1,5 +1,6 @@
 import * as log from "std/log";
 import { LogRecord } from "std/log";
+import { Env } from "./env.ts";
 
 class CustomConsoleHandler extends log.handlers.BaseHandler {
   override format(logRecord: LogRecord): string {
@@ -10,10 +11,12 @@ class CustomConsoleHandler extends log.handlers.BaseHandler {
   }
 }
 
+const logLevel: log.LevelName = Env.isProduction ? "INFO" : "DEBUG";
+
 log.setup({
   handlers: {
     console: new CustomConsoleHandler(
-      "INFO",
+      logLevel,
       {
         formatter: (log) => {
           const date = new Date().toISOString();
@@ -24,11 +27,11 @@ log.setup({
   },
   loggers: {
     batch: {
-      level: "INFO",
+      level: logLevel,
       handlers: ["console"],
     },
     sqs: {
-      level: "INFO",
+      level: logLevel,
       handlers: ["console"],
     },
   },
