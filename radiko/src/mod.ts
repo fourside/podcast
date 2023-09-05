@@ -1,33 +1,32 @@
 import { authorize } from "./auth-client.ts";
-import { getDateIfMidnightThenSubtracted } from "./date.ts";
 import { parseArgs } from "./cli.ts";
+import { getDateIfMidnightThenSubtracted } from "./date.ts";
+import { Env } from "./env.ts";
+import { batchLogger as logger, setupLog } from "./logger.ts";
 import { getOutputFilename } from "./output-filename.ts";
 import { record } from "./recorder.ts";
+import { sendMessageToSlack } from "./slack-client.ts";
 import { getPlaylistXml } from "./xml-client.ts";
 import { getPlaylistUriFromXml } from "./xml-parser.ts";
-import { sendMessageToSlack } from "./slack-client.ts";
 
 export async function main(args: string[]) {
-  const webhookUrl = Deno.env.get("SLACK_WEBHOOK_URL");
-  if (webhookUrl === undefined) {
-    throw new Error("SLACK_WEBHOOK_URL is not passed.");
-  }
+  setupLog(Env.isProduction ? "INFO" : "DEBUG");
 
   const result = parseArgs(args);
   if (result.exit) {
     Deno.exit(result.exitCode);
   }
-  console.log("record start.", args, new Date());
+  logger.info(`record start. ${args}`);
   const { station, duration, title, artist } = result;
   try {
     await batch({ station, duration, title, artist });
-    console.log("record end.", new Date());
+    logger.info("record end.");
   } catch (error) {
-    console.error("record failed.", error);
+    logger.error("record failed.", error);
     try {
-      await sendMessageToSlack(webhookUrl, error.message, title, artist);
+      await sendMessageToSlack(Env.webhookUrl, error.message, title, artist);
     } catch (slackError) {
-      console.error("Send slack failed.", slackError);
+      logger.error("Send slack failed.", slackError);
     }
     Deno.exit(-1);
   }

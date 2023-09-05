@@ -1,6 +1,8 @@
 import { ApiFactory } from "x/aws_api/client";
 import { SQS } from "x/aws_api/sqs";
+import { sqsLogger as logger } from "../logger.ts";
 import { RecRadikoError } from "../rec-radiko-error.ts";
+import { processMessage } from "./message-process.ts";
 
 type Credentials = {
   awsAccessKeyId: string;
@@ -25,7 +27,6 @@ export type ProcessMessageResult = {
 export async function receiveMessage(
   sqs: SQS,
   queueUrl: string,
-  processMessage: (messageBody: string) => Promise<ProcessMessageResult>,
 ): Promise<void> {
   const messages = await sqs.receiveMessage({
     QueueUrl: queueUrl,
@@ -33,8 +34,9 @@ export async function receiveMessage(
     WaitTimeSeconds: 20,
   });
   for (const message of messages.Messages) {
-    console.log(message);
+    logger.info(message);
     if (message.Body === null || message.Body === undefined) {
+      logger.warning("message.Body is empty.");
       continue;
     }
     const result = await processMessage(message.Body);
@@ -42,7 +44,7 @@ export async function receiveMessage(
       if (
         message.ReceiptHandle === null || message.ReceiptHandle === undefined
       ) {
-        console.error("message.ReceiptHandle is null or undefined", message);
+        logger.error("message.ReceiptHandle is null or undefined", message);
         continue;
       }
       await sqs.deleteMessage({

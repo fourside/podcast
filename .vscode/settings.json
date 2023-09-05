@@ -1,11 +1,9 @@
 {
-    "cSpell.words": [
-        "radiko"
-    ],
-    "deno.enable": true,
-    "deno.lint": true,
-    "deno.unstable": false,
-    "deno.importMap": "./radiko/import_map.json",
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "denoland.vscode-deno",
+  "cSpell.words": ["radiko"],
+  "deno.enable": true,
+  "deno.lint": true,
+  "deno.unstable": false,
+  "deno.importMap": "./radiko/deno.jsonc",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "denoland.vscode-deno"
 }

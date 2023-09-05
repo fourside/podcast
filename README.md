@@ -14,6 +14,7 @@
   - `export SLACK_WEBHOOK_URL=xxxxxxx`
   - `export FEEDER_USER=xxxxxxx`
   - `export FEEDER_PASSWORD=xxxxxxx`
+  - `export IS_PRODUCTION=true`
 
 ## docker version
 

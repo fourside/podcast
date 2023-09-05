@@ -5,6 +5,7 @@ import {
   getDateIfMidnightThenSubtracted,
   parseAsFromTime,
 } from "../date.ts";
+import { sqsLogger as logger } from "../logger.ts";
 import { getOutputFilename } from "../output-filename.ts";
 import { recordTimefree } from "../recorder.ts";
 import { MessageBodySchema } from "./schema.ts";
@@ -31,6 +32,7 @@ export async function processMessage(
 
     const isAlreadyRecoded = await fileExists(fileName);
     if (isAlreadyRecoded) {
+      logger.info(`already handled message: title: ${messageBody.title}`);
       return {
         shouldBeDeleted: true,
       };
@@ -50,7 +52,7 @@ export async function processMessage(
       shouldBeDeleted: true,
     };
   } catch (error) {
-    console.error("process SQS message failed.", error);
+    logger.error("process SQS message failed.", error);
     return {
       error: error.message,
       shouldBeDeleted: false,
