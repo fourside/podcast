@@ -2,7 +2,7 @@ import { authorize } from "./auth-client.ts";
 import { parseArgs } from "./cli.ts";
 import { getDateIfMidnightThenSubtracted } from "./date.ts";
 import { Env } from "./env.ts";
-import { batchLogger as logger } from "./logger.ts";
+import { batchLogger as logger, setupLog } from "./logger.ts";
 import { getOutputFilename } from "./output-filename.ts";
 import { record } from "./recorder.ts";
 import { sendMessageToSlack } from "./slack-client.ts";
@@ -10,6 +10,8 @@ import { getPlaylistXml } from "./xml-client.ts";
 import { getPlaylistUriFromXml } from "./xml-parser.ts";
 
 export async function main(args: string[]) {
+  setupLog(Env.isProduction ? "INFO" : "DEBUG");
+
   const result = parseArgs(args);
   if (result.exit) {
     Deno.exit(result.exitCode);

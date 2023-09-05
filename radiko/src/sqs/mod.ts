@@ -1,9 +1,11 @@
-import { sqsLogger as logger } from "../logger.ts";
+import { setupLog, sqsLogger as logger } from "../logger.ts";
 import { sendTimefreeErrorMessageToSlack } from "../slack-client.ts";
 import { Env } from "./env.ts";
 import { createSqsClient, receiveMessage } from "./sqs.ts";
 
 export async function main(_: string[]) {
+  setupLog(Env.isProduction ? "INFO" : "DEBUG");
+
   const sqs = createSqsClient({
     awsAccessKeyId: Env.awsAccessKeyId,
     awsSecretKey: Env.awsSecretAccessKey,

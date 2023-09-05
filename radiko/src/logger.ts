@@ -1,6 +1,5 @@
 import * as log from "std/log";
 import { LogRecord } from "std/log";
-import { Env } from "./env.ts";
 
 class CustomConsoleHandler extends log.handlers.BaseHandler {
   override format(logRecord: LogRecord): string {
@@ -11,31 +10,31 @@ class CustomConsoleHandler extends log.handlers.BaseHandler {
   }
 }
 
-const logLevel: log.LevelName = Env.isProduction ? "INFO" : "DEBUG";
-
-log.setup({
-  handlers: {
-    console: new CustomConsoleHandler(
-      logLevel,
-      {
-        formatter: (log) => {
-          const date = new Date().toISOString();
-          return `${date} [${log.loggerName}] [${log.levelName}] ${log.msg}`;
+export function setupLog(logLevel: log.LevelName): void {
+  log.setup({
+    handlers: {
+      console: new CustomConsoleHandler(
+        logLevel,
+        {
+          formatter: (log) => {
+            const date = new Date().toISOString();
+            return `${date} [${log.loggerName}] [${log.levelName}] ${log.msg}`;
+          },
         },
+      ),
+    },
+    loggers: {
+      batch: {
+        level: logLevel,
+        handlers: ["console"],
       },
-    ),
-  },
-  loggers: {
-    batch: {
-      level: logLevel,
-      handlers: ["console"],
+      sqs: {
+        level: logLevel,
+        handlers: ["console"],
+      },
     },
-    sqs: {
-      level: logLevel,
-      handlers: ["console"],
-    },
-  },
-});
+  });
+}
 
 export const commonLogger = log.getLogger("common");
 export const batchLogger = log.getLogger("batch");
