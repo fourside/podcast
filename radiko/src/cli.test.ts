@@ -75,7 +75,16 @@ Deno.test("normal long option", () => {
 
 Deno.test("normal short option", () => {
   // arrange
-  const args = ["-s", "QRR", "-d", "120", "-t", "タイトル2", "-a", "アーティスト2"];
+  const args = [
+    "-s",
+    "QRR",
+    "-d",
+    "120",
+    "-t",
+    "タイトル2",
+    "-a",
+    "アーティスト2",
+  ];
   // act
   const result = parseArgs(args);
 
@@ -90,7 +99,16 @@ Deno.test("normal short option", () => {
 
 Deno.test("duration not number", () => {
   // arrange
-  const args = ["-s", "TBS", "-d", "aaa", "-t", "タイトル", "-a", "アーティスト"];
+  const args = [
+    "-s",
+    "TBS",
+    "-d",
+    "aaa",
+    "-t",
+    "タイトル",
+    "-a",
+    "アーティスト",
+  ];
   // act
   const result = parseArgs(args);
 
