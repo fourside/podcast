@@ -21,7 +21,7 @@ services:
     build: ./nginx
     image: "${APP}_nginx:${TAG}"
     ports:
-      - 8082:80
+      - 80:80
     volumes:
       - type: volume
         source: PUBLIC_DIR
