@@ -1,6 +1,6 @@
 import { parse } from "std/flags";
 
-import { batchLogger as logger } from "./logger.ts";
+import { getLogger } from "./logger.ts";
 import { version } from "./version.ts";
 
 type ReturnValue = {
@@ -17,6 +17,7 @@ type ReturnValue = {
 const commandName = "rec_radiko";
 
 export function parseArgs(args: string[]): ReturnValue {
+  const logger = getLogger("batch");
   const parsed = parse(args);
   if (parsed.version || parsed.v) {
     logger.info(`${commandName} version: ${version.version}`);
@@ -60,6 +61,7 @@ export function parseArgs(args: string[]): ReturnValue {
 }
 
 function showUsage() {
+  const logger = getLogger("batch");
   logger.info(
     `usage: ${commandName} --station <station> --duration <duration> --title <title> --artist <artist>`,
   );

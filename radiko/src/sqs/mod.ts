@@ -1,4 +1,4 @@
-import { setupLog, sqsLogger as logger } from "../logger.ts";
+import { getLogger, setupLog } from "../logger.ts";
 import { sendTimefreeErrorMessageToSlack } from "../slack-client.ts";
 import { Env } from "./env.ts";
 import { createSqsClient, receiveMessage } from "./sqs.ts";
@@ -15,6 +15,7 @@ export async function main(_: string[]) {
     await receiveMessage(sqs, Env.queueUrl);
     await receiveMessage(sqs, Env.deadLetterQueueUrl);
   } catch (error) {
+    const logger = getLogger("sqs");
     logger.error(error);
     try {
       await sendTimefreeErrorMessageToSlack(Env.webhookUrl, error.message);

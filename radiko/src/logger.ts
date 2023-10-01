@@ -36,6 +36,5 @@ export function setupLog(logLevel: log.LevelName): void {
   });
 }
 
-export const commonLogger = log.getLogger("common");
-export const batchLogger = log.getLogger("batch");
-export const sqsLogger = log.getLogger("sqs");
+export const getLogger = (app: "batch" | "sqs" | "common") =>
+  log.getLogger(app);
