@@ -1,5 +1,5 @@
 import { encode } from "std/encoding/base64";
-import { commonLogger as logger } from "./logger.ts";
+import { getLogger } from "./logger.ts";
 import { RecRadikoError } from "./rec-radiko-error.ts";
 
 type AuthToken = string;
@@ -14,6 +14,7 @@ type Auth1Headers = {
 };
 
 export async function authorize(): Promise<AuthToken> {
+  const logger = getLogger("common");
   // Authorize 1
   const auth1Response = await fetch("https://radiko.jp/v2/api/auth1", {
     headers: {
