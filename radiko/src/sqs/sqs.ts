@@ -1,6 +1,6 @@
 import { ApiFactory } from "x/aws_api/client";
 import { SQS } from "x/aws_api/sqs";
-import { sqsLogger as logger } from "../logger.ts";
+import { getLogger } from "../logger.ts";
 import { RecRadikoError } from "../rec-radiko-error.ts";
 import { processMessage } from "./message-process.ts";
 
@@ -28,6 +28,7 @@ export async function receiveMessage(
   sqs: SQS,
   queueUrl: string,
 ): Promise<void> {
+  const logger = getLogger("sqs");
   const messages = await sqs.receiveMessage({
     QueueUrl: queueUrl,
     MaxNumberOfMessages: 10,

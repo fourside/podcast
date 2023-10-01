@@ -1,5 +1,5 @@
 import { formatDateTime } from "./date.ts";
-import { batchLogger, sqsLogger } from "./logger.ts";
+import { getLogger } from "./logger.ts";
 
 export async function sendMessageToSlack(
   webhookUrl: string,
@@ -21,7 +21,8 @@ export async function sendMessageToSlack(
     },
     body: JSON.stringify(blocks),
   });
-  batchLogger.info("Send Slack response.", response);
+  const logger = getLogger("batch");
+  logger.info("Send Slack response.", response);
 }
 
 function buildBlockKit(
@@ -75,7 +76,8 @@ export async function sendTimefreeErrorMessageToSlack(
     },
     body: JSON.stringify(blocks),
   });
-  sqsLogger.info("Send Slack response.", response);
+  const logger = getLogger("sqs");
+  logger.info("Send Slack response.", response);
 }
 
 function buildTimefreeErrorBlockKit(

@@ -5,7 +5,7 @@ import {
   getDateIfMidnightThenSubtracted,
   parseAsFromTime,
 } from "../date.ts";
-import { sqsLogger as logger } from "../logger.ts";
+import { getLogger } from "../logger.ts";
 import { getOutputFilename } from "../output-filename.ts";
 import { recordTimefree } from "../recorder.ts";
 import { MessageBodySchema } from "./schema.ts";
@@ -14,6 +14,7 @@ import { ProcessMessageResult } from "./sqs.ts";
 export async function processMessage(
   messageBodyString: string,
 ): Promise<ProcessMessageResult> {
+  const logger = getLogger("sqs");
   try {
     const messageBodyJson = JSON.parse(messageBodyString);
     const messageBody = MessageBodySchema.parse(messageBodyJson);
