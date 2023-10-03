@@ -1,8 +1,7 @@
-import React from "react";
-import { hydrate } from "react-dom";
-import { Index } from ".";
+import { hydrateRoot } from "react-dom/client";
+import { Index } from "./page";
 
-hydrate(<Index dfByDevices={deserializeData()} />, document.getElementById("root"));
+hydrateRoot(document.getElementById("root") as Element, <Index dfByDevices={deserializeData()} />);
 
 function deserializeData() {
   const data = document.getElementById("__DATA__")?.textContent;

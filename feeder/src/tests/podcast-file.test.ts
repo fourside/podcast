@@ -1,8 +1,9 @@
-import assert from "assert";
-import * as fs from "fs";
-import { getPodcastFiles } from "../podcast-file";
+import assert from "node:assert";
+import * as fs from "node:fs";
+import { after, before, describe, it } from "node:test";
+import { getPodcastFiles } from "../app/feed/podcast-file";
 
-describe("getPodcastFiles", () => {
+describe("getPodcastFiles", async () => {
   const dir = "./test-files";
   const fileNames = [`${dir}/test-a.mp3`, `${dir}/test-b.mp3`, `${dir}/test-c.mp3`];
 

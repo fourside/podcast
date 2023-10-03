@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Env } from "./env";
+import { Env } from "../../env";
 
 export type PodcastFile = {
   title: string;

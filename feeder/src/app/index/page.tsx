@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import type { ReactElement } from "react";
-import { DiscFreeOfDevDevice } from "../df-dev-device";
+import { useState } from "react";
 import { Devices } from "./devices";
+import { DiscFreeOfDevDevice } from "./df-dev-device";
 
 interface Props {
   dfByDevices: DiscFreeOfDevDevice[];

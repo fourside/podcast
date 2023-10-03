@@ -1,10 +1,10 @@
 import type { FastifyInstance } from "fastify";
 import { renderToStaticMarkup, renderToString } from "react-dom/server";
-import { Index } from "./components";
-import { Feed } from "./feed";
+import { Feed } from "./app/feed/page";
+import { getDiscFreeOfDevDevice } from "./app/index/df-dev-device";
+import { Index } from "./app/index/page";
+import { renderHtml } from "./app/index/render-html";
 import { getClientSideJs } from "./client-side-js";
-import { renderHtml } from "./render-html";
-import { getDiscFreeOfDevDevice } from "./df-dev-device";
 
 const xmlDocType = '<?xml version="1.0" encoding="UTF-8"?>';
 

@@ -1,4 +1,4 @@
-FROM node:16-alpine3.14 as builder
+FROM node:20-alpine3.17 as builder
 
 RUN apk add --no-cache libc6-compat tzdata \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
@@ -11,7 +11,7 @@ RUN npm ci
 RUN npm run build
 
 
-FROM node:16-alpine3.14 as runner
+FROM node:20-alpine3.17 as runner
 
 WORKDIR /app
 
