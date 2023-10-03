@@ -7,7 +7,7 @@
     "dev": "ts-node-dev src/bootstrap.ts",
     "build": "tsc",
     "build-client": "NODE_ENV=production ts-node src/client-build.ts src/app/index/hydrate.tsx",
-    "start": "NODE_ENV=production node dist/",
+    "start": "NODE_ENV=production node dist/bootstrap.js",
     "lint": "eslint src --ext ts,tsx",
     "check": "npm run lint && npm run test && tsc --noEmit",
     "clean": "node -e 'fs.rmSync(`dist`, {recursive: true, force: true})'",
