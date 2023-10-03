@@ -6,13 +6,13 @@ export function esbuild(entryPointPath: string): BuildResult {
   const dist = Env.getDistDir();
   return buildSync({
     bundle: true,
-    target: "es2020",
+    target: "es2022",
     platform: "browser",
     entryPoints: [entryPointPath],
     outdir: dist,
     sourcemap: false,
     treeShaking: true,
-    jsx: "transform",
+    jsx: "automatic",
     minify: isProduction,
   });
 }

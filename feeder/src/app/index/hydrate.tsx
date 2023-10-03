@@ -1,6 +1,5 @@
-import React from "react";
 import { hydrate } from "react-dom";
-import { Index } from ".";
+import { Index } from "./page";
 
 hydrate(<Index dfByDevices={deserializeData()} />, document.getElementById("root"));
 

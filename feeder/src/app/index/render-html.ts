@@ -10,7 +10,7 @@ export function renderHtml(renderedComponent: string, data: unknown): string {
     <div id="root">
       #{App}
     </div>
-    <script defer src="/js/client.js"></script>
+    <script defer src="/js/hydrate.js"></script>
   </body>
   <script id="__DATA__" type="application/json">
 #{Data}

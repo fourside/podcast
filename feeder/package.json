@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/index.ts",
+    "dev": "ts-node-dev src/bootstrap.ts",
     "build": "tsc",
-    "build-client": "NODE_ENV=production ts-node src/esbuild.ts src/components/client.tsx",
+    "build-client": "NODE_ENV=production ts-node src/client-build.ts src/app/index/hydrate.tsx",
     "start": "NODE_ENV=production node dist/",
     "lint": "eslint src --ext ts,tsx",
     "check": "npm run lint && npm run test && tsc --noEmit",
@@ -21,16 +21,16 @@
     "dayjs": "^1.10.7",
     "fastify": "^3.27.0",
     "fastify-helmet": "^7.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.8.0",
-    "@types/react": "^17.0.38",
-    "@types/react-dom": "^17.0.11",
+    "@types/react": "^18.2.24",
+    "@types/react-dom": "^18.2.8",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
-    "esbuild": "^0.14.14",
+    "esbuild": "^0.19.4",
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",

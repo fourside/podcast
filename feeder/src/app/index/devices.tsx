@@ -1,11 +1,11 @@
-import React, { CSSProperties, VFC } from "react";
-import { DiscFreeOfDevDevice } from "../df-dev-device";
+import { CSSProperties, FC } from "react";
+import { DiscFreeOfDevDevice } from "./df-dev-device";
 
 interface Props {
   dfByDevices: DiscFreeOfDevDevice[];
 }
 
-export const Devices: VFC<Props> = (props) => {
+export const Devices: FC<Props> = (props) => {
   return (
     <div style={devicesStyle}>
       {props.dfByDevices.map((device) => (

@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import * as fs from "node:fs";
 import { after, before, describe, it } from "node:test";
-import { getPodcastFiles } from "../podcast-file";
+import { getPodcastFiles } from "../app/feed/podcast-file";
 
 describe("getPodcastFiles", async () => {
   const dir = "./test-files";

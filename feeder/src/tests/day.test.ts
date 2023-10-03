@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
-import { formatRfc822 } from "../day";
+import { formatRfc822 } from "../app/feed/day";
 
 describe("date", () => {
   describe("formatRfc822", () => {
