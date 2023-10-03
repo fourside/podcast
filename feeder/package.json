@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/bootstrap.ts",
+    "dev": "node --watch -r ts-node/register src/bootstrap.ts",
     "build": "tsc",
     "build-client": "NODE_ENV=production ts-node src/client-build.ts src/app/index/hydrate.tsx",
     "start": "NODE_ENV=production node dist/bootstrap.js",
@@ -36,7 +36,6 @@
     "eslint-plugin-prettier": "^5.0.0",
     "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
-    "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
   },
   "prettier": {
