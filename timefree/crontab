@@ -1,3 +1,0 @@
-SHELL=/bin/bash
-PATH=/usr/local/bin:/bin:/usr/bin
-*/10  *  * * * cd /work && deno task sqs

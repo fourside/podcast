@@ -1,11 +1,6 @@
 #!/bin/bash
-
-if [[ ! "${SLACK_WEBHOOK_URL+set}" ]]; then
-  echo "set env SLACK_WEBHOOK_URL"
-  exit 1
-fi
-
 set -e
+
 if [[ ! "${SQS_URL+set}" ]]; then
   echo "set env SQS_URL"
   exit 1
@@ -26,13 +21,28 @@ if [[ ! "${AWS_SECRET_ACCESS_KEY+set}" ]]; then
   exit 1
 fi
 
-if [[ ! "${FEEDER_USER+set}" ]]; then
-  echo "set env FEEDER_USER"
+if [[ ! "${CLOUDFLARE_BUCKET_NAME+set}" ]]; then
+  echo "set env CLOUDFLARE_BUCKET_NAME"
   exit 1
 fi
 
-if [[ ! "${FEEDER_PASSWORD+set}" ]]; then
-  echo "set env FEEDER_PASSWORD"
+if [[ ! "${CLOUDFLARE_ACCOUNT_ID+set}" ]]; then
+  echo "set env CLOUDFLARE_ACCOUNT_ID"
+  exit 1
+fi
+
+if [[ ! "${CLOUDFLARE_ACCESS_KEY_ID+set}" ]]; then
+  echo "set env CLOUDFLARE_ACCESS_KEY_ID"
+  exit 1
+fi
+
+if [[ ! "${CLOUDFLARE_SECRET_ACCESS_KEY+set}" ]]; then
+  echo "set env CLOUDFLARE_SECRET_ACCESS_KEY"
+  exit 1
+fi
+
+if [[ ! "${SLACK_WEBHOOK_URL+set}" ]]; then
+  echo "set env SLACK_WEBHOOK_URL"
   exit 1
 fi
 
