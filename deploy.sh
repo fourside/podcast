@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+source .env.vars
+
 if [[ ! "${SQS_URL+set}" ]]; then
   echo "set env SQS_URL"
   exit 1
