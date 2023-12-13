@@ -1,6 +1,7 @@
 services:
 
   radiko:
+    build: .
     image: "${APP}_radiko:${TAG}"
     volumes:
       - type: volume
