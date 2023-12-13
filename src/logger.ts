@@ -24,11 +24,11 @@ export function setupLog(logLevel: log.LevelName): void {
       ),
     },
     loggers: {
-      batch: {
+      realtime: {
         level: logLevel,
         handlers: ["console"],
       },
-      sqs: {
+      queue: {
         level: logLevel,
         handlers: ["console"],
       },
