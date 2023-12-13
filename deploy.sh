@@ -46,8 +46,8 @@ if [[ ! "${SLACK_WEBHOOK_URL+set}" ]]; then
   exit 1
 fi
 
-docker-compose ps
-docker-compose build
-docker-compose down
-docker-compose up -d
-docker-compose ps
+docker compose ps
+docker compose build
+docker compose down
+docker compose up -d
+docker compose ps

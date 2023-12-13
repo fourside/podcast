@@ -22,7 +22,7 @@
 
 ```bash
 # docker -v
-Docker version 20.10.7, build f0df350
-# docker-compose -v
-docker-compose version 1.24.0, build 0aa59064
+Docker version 24.0.7, build afdd53b
+# docker compose version
+Docker Compose version v2.21.0
 ```
