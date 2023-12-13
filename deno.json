@@ -1,0 +1,23 @@
+{
+  "tasks": {
+    "dev": "deno run --watch src/main.ts",
+    "run": "deno run --allow-run --allow-net --allow-env --allow-read --allow-write --allow-sys src/realtime/mod.ts",
+    "queue": "deno run --allow-run --allow-net --allow-env --allow-read --allow-write --allow-sys src/queue/mod.ts",
+    "cache": "deno cache src/realtime/mod.ts && deno cache src/queue/mod.ts",
+    "run:sample": "deno task run -s TBS -d 1 -t テスト -a パーソナリティ"
+  },
+  "imports": {
+    "std/assert": "https://deno.land/std@0.208.0/assert/mod.ts",
+    "std/cli": "https://deno.land/std@0.208.0/cli/mod.ts",
+    "std/encoding/base64": "https://deno.land/std@0.208.0/encoding/base64.ts",
+    "std/datetime": "https://deno.land/std@0.208.0/datetime/mod.ts",
+    "std/fmt/printf": "https://deno.land/std@0.208.0/fmt/printf.ts",
+    "std/fs/copy": "https://deno.land/std@0.208.0/fs/copy.ts",
+    "std/log": "https://deno.land/std@0.208.0/log/mod.ts",
+    "x/aws_api/client": "https://deno.land/x/aws_api@v0.8.1/client/mod.ts",
+    "x/aws_api/sqs": "https://deno.land/x/aws_api@v0.8.1/services/sqs/mod.ts",
+    "x/aws_sdk/s3-client": "npm:@aws-sdk/client-s3",
+    "x/zod": "https://deno.land/x/zod@v3.22.2/mod.ts",
+    "x/xml": "https://deno.land/x/xml@2.1.1/mod.ts"
+  }
+}

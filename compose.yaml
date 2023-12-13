@@ -1,0 +1,24 @@
+services:
+
+  radiko:
+    build: .
+    image: "${APP}_radiko:${TAG}"
+    volumes:
+      - type: volume
+        source: TMP_DIR
+        target: /work
+        read_only: false
+    environment:
+        - SQS_URL
+        - DEAD_LETTER_SQS_URL
+        - AWS_ACCESS_KEY_ID
+        - AWS_SECRET_ACCESS_KEY
+        - CLOUDFLARE_BUCKET_NAME
+        - CLOUDFLARE_ACCOUNT_ID
+        - CLOUDFLARE_ACCESS_KEY_ID
+        - CLOUDFLARE_SECRET_ACCESS_KEY
+        - SLACK_WEBHOOK_URL
+        - IS_PRODUCTION
+
+volumes:
+  TMP_DIR:

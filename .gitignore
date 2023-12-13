@@ -2,7 +2,5 @@
 *swf
 *.mp3
 *flv
-*log
 *pid
-bin/
-.bundle/
+.env.vars
