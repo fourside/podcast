@@ -5,7 +5,7 @@
 - run the command below:
 
 ```bash
-cat .env.vars <<EOF
+cat > .env.vars <<EOF
 export SQS_URL=https://sqs.xxxxxxxxxxxxxx.amazonaws.com/xxx/xxx.fifo
 export DEAD_LETTER_SQS_URL=https://sqs.xxxxxxxxxxxxxx.amazonaws.com/xxx/xxx.fifo
 export AWS_ACCESS_KEY_ID=xxxxxxxxxx
