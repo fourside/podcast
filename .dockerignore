@@ -1,6 +1,6 @@
 .editorconfig
 .gitignore
 deploy.sh
-docker-compose.yml
+compose.yaml
 Dockerfile
 README.md

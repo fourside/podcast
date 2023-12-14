@@ -10,4 +10,4 @@ PATH=/usr/local/bin:/bin:/usr/bin
 59 10 * * 0   cd /work && deno task run -s JOAK-FM -d 52 -t 伊集院光の百年ラヂオ -a 伊集院光
 29 17 * * 2-5 cd /work && deno task run -s LFR -d 32 -t 伊集院光のタネ -a 伊集院光
 */10  *  * * * cd /work && deno task queue
-0  0  * * *   find /public/ -mtime +15 | xargs rm
+0  0  * * *   find /work/files/ -mtime +30 | xargs rm
