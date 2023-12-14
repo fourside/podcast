@@ -1,3 +1,4 @@
+import { basename } from "std/path";
 import { PutObjectCommand, S3 } from "x/aws_sdk/s3-client";
 import { Env } from "./env.ts";
 
@@ -11,10 +12,11 @@ export async function putMp3(filePath: string): Promise<void> {
     },
   });
   const file = await Deno.readFile(filePath);
+  const fileName = basename(filePath);
   await client.send(
     new PutObjectCommand({
       Bucket: Env.cloudflare.bucketName,
-      Key: filePath,
+      Key: fileName,
       Body: file,
       ContentType: "audio/mp3",
     }),

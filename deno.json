@@ -14,6 +14,7 @@
     "std/fmt/printf": "https://deno.land/std@0.208.0/fmt/printf.ts",
     "std/fs/copy": "https://deno.land/std@0.208.0/fs/copy.ts",
     "std/log": "https://deno.land/std@0.208.0/log/mod.ts",
+    "std/path": "https://deno.land/std@0.208.0/path/mod.ts",
     "x/aws_api/client": "https://deno.land/x/aws_api@v0.8.1/client/mod.ts",
     "x/aws_api/sqs": "https://deno.land/x/aws_api@v0.8.1/services/sqs/mod.ts",
     "x/aws_sdk/s3-client": "npm:@aws-sdk/client-s3",
