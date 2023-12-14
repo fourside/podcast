@@ -62,9 +62,8 @@ export async function processMessage(
 }
 
 async function fileExists(fileName: string): Promise<boolean> {
-  const path = `/public/${fileName}`;
   try {
-    const stat = await Deno.stat(path);
+    const stat = await Deno.stat(fileName);
     return stat.isFile;
   } catch (_error) {
     return false;
