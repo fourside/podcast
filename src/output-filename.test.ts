@@ -1,5 +1,5 @@
-import { assertEquals } from "std/testing";
-import { getOutputFilename } from "./output-filename.ts";
+import { assertEquals } from "std/assert";
+import { FILE_DIR, getOutputFilename } from "./output-filename.ts";
 
 Deno.test("ファイル名のフォーマット", () => {
   // arrange
@@ -8,5 +8,5 @@ Deno.test("ファイル名のフォーマット", () => {
   // act
   const result = getOutputFilename(title, date);
   // assert
-  assertEquals(result, "title-20220101.mp3");
+  assertEquals(result, `${FILE_DIR}/title-20220101.mp3`);
 });

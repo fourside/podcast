@@ -1,4 +1,4 @@
-import { assertEquals } from "std/testing";
+import { assertEquals } from "std/assert";
 import {
   addMinutes,
   formatTimeForFfmpeg,
