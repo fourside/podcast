@@ -1,6 +1,8 @@
 import { format } from "std/datetime";
 
+export const FILE_DIR = "files";
+
 export function getOutputFilename(title: string, date: Date): string {
   const suffix = format(date, "yyyyMMdd");
-  return `${title}-${suffix}.mp3`;
+  return `${FILE_DIR}/${title}-${suffix}.mp3`;
 }

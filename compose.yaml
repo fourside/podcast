@@ -5,8 +5,8 @@ services:
     image: "${APP}_radiko:${TAG}"
     volumes:
       - type: volume
-        source: TMP_DIR
-        target: /work
+        source: FILES_DIR
+        target: /files
         read_only: false
     environment:
         - SQS_URL
@@ -21,4 +21,4 @@ services:
         - IS_PRODUCTION
 
 volumes:
-  TMP_DIR:
+  FILES_DIR:
