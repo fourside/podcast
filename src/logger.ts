@@ -1,5 +1,6 @@
 import * as log from "std/log";
 import { LogRecord } from "std/log";
+import { isoDateTime } from "./date.ts";
 
 class CustomConsoleHandler extends log.handlers.BaseHandler {
   override format(logRecord: LogRecord): string {
@@ -17,7 +18,7 @@ export function setupLog(logLevel: log.LevelName): void {
         logLevel,
         {
           formatter: (log) => {
-            const date = new Date().toISOString();
+            const date = isoDateTime(new Date());
             return `${date} [${log.loggerName}] [${log.levelName}] ${log.msg}`;
           },
         },

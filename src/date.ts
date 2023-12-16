@@ -19,6 +19,10 @@ export function formatDateTime(date: Date): string {
   return format(date, "yyyy/MM/dd HH:mm");
 }
 
+export function isoDateTime(date: Date): string {
+  return format(date, "yyyy-MM-dd HH:mm:ss");
+}
+
 export function parseAsFromTime(fromTime: string): Date {
   return parse(fromTime, "yyyyMMddHHmm");
 }

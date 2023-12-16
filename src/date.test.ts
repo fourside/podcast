@@ -4,6 +4,7 @@ import {
   formatTimeForFfmpeg,
   formatTimefreeDateTime,
   getDateIfMidnightThenSubtracted,
+  isoDateTime,
   parseAsFromTime,
 } from "./date.ts";
 
@@ -101,4 +102,13 @@ Deno.test("formatTimefreeDateTime", () => {
   const result = formatTimefreeDateTime(date);
   // assert
   assertEquals(result, "20200102030405");
+});
+
+Deno.test("isoDateTime", () => {
+  // arrange
+  const date = new Date(2020, 0, 2, 3, 4, 5);
+  // act
+  const result = isoDateTime(date);
+  // assert
+  assertEquals(result, "2020-01-02 03:04:05");
 });
