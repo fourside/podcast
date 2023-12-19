@@ -3,6 +3,7 @@
     "dev": "deno run --watch src/main.ts",
     "run": "deno run --allow-run --allow-net --allow-env --allow-read --allow-write --allow-sys src/realtime/mod.ts",
     "queue": "deno run --allow-run --allow-net --allow-env --allow-read --allow-write --allow-sys src/queue/mod.ts",
+    "put": "deno run --allow-run --allow-net --allow-env --allow-read --allow-write --allow-sys src/put-file.ts",
     "cache": "deno cache src/realtime/mod.ts && deno cache src/queue/mod.ts",
     "prepare": "git config --local core.hooksPath .githooks",
     "run:sample": "deno task run -s TBS -d 1 -t テスト -a パーソナリティ"
