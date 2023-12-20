@@ -25,5 +25,8 @@
   },
   "fmt": {
     "exclude": ["aws"]
+  },
+  "lint": {
+    "exclude": ["aws"]
   }
 }
