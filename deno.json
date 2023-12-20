@@ -22,5 +22,8 @@
     "x/aws_api/s3": "https://deno.land/x/aws_api@v0.8.1/services/s3/mod.ts",
     "x/zod": "https://deno.land/x/zod@v3.22.2/mod.ts",
     "x/xml": "https://deno.land/x/xml@2.1.1/mod.ts"
+  },
+  "fmt": {
+    "exclude": ["aws"]
   }
 }
