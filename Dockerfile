@@ -5,10 +5,8 @@ WORKDIR /work
 COPY . .
 
 RUN apk add --no-cache \
-        tzdata ffmpeg bash unzip \
+        tzdata ffmpeg bash \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
-    && unzip ./awscliv2.zip \
-    && ./aws/install \
     && crontab ./crontab \
     && deno task cache
 
