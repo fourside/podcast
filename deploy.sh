@@ -3,26 +3,6 @@ set -e
 
 source .env.vars
 
-if [[ ! "${SQS_URL+set}" ]]; then
-  echo "set env SQS_URL"
-  exit 1
-fi
-
-if [[ ! "${DEAD_LETTER_SQS_URL+set}" ]]; then
-  echo "set env DEAD_LETTER_SQS_URL"
-  exit 1
-fi
-
-if [[ ! "${AWS_ACCESS_KEY_ID+set}" ]]; then
-  echo "set env AWS_ACCESS_KEY_ID"
-  exit 1
-fi
-
-if [[ ! "${AWS_SECRET_ACCESS_KEY+set}" ]]; then
-  echo "set env AWS_SECRET_ACCESS_KEY"
-  exit 1
-fi
-
 if [[ ! "${CLOUDFLARE_BUCKET_NAME+set}" ]]; then
   echo "set env CLOUDFLARE_BUCKET_NAME"
   exit 1
@@ -40,6 +20,21 @@ fi
 
 if [[ ! "${CLOUDFLARE_SECRET_ACCESS_KEY+set}" ]]; then
   echo "set env CLOUDFLARE_SECRET_ACCESS_KEY"
+  exit 1
+fi
+
+if [[ ! "${QUEUE_URL+set}" ]]; then
+  echo "set env QUEUE_URL"
+  exit 1
+fi
+
+if [[ ! "${QUEUE_USERNAME+set}" ]]; then
+  echo "set env QUEUE_USERNAME"
+  exit 1
+fi
+
+if [[ ! "${QUEUE_PASSWORD+set}" ]]; then
+  echo "set env QUEUE_PASSWORD"
   exit 1
 fi
 
