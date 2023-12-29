@@ -4,7 +4,7 @@ import { getLogger } from "../logger.ts";
 import { putMp3 } from "../r2-client.ts";
 import { RecRadikoError } from "../rec-radiko-error.ts";
 
-export type RecordMeta = {
+type Program = {
   station: string;
   duration: number;
   title: string;
@@ -14,7 +14,7 @@ export type RecordMeta = {
 };
 
 export async function record(
-  recordMeta: RecordMeta,
+  program: Program,
   authToken: string,
   playListUrl: string,
 ): Promise<void> {
@@ -32,19 +32,19 @@ export async function record(
     "128k",
     "-y",
     "-t",
-    formatTimeForFfmpeg(recordMeta.duration),
+    formatTimeForFfmpeg(program.duration),
     "-metadata",
-    `title=${recordMeta.title}`,
+    `title=${program.title}`,
     "-metadata",
-    `artist=${recordMeta.artist}`,
+    `artist=${program.artist}`,
     "-metadata",
-    `year=${recordMeta.year}`,
-    recordMeta.outputFileName,
+    `year=${program.year}`,
+    program.outputFileName,
   ];
   const { success, stdout, stderr } = await run(args);
   if (success) {
     logger.info(new TextDecoder().decode(stdout));
-    await putMp3(recordMeta.outputFileName);
+    await putMp3(program.outputFileName);
   } else {
     const error = new TextDecoder().decode(stderr);
     throw new RecRadikoError(error);

@@ -3,7 +3,7 @@ import { getLogger } from "../logger.ts";
 import { putMp3 } from "../r2-client.ts";
 import { RecRadikoError } from "../rec-radiko-error.ts";
 
-export type RecordTimefree = {
+export type ProgramTimefree = {
   station: string;
   fromTime: string;
   toTime: string;
@@ -14,7 +14,7 @@ export type RecordTimefree = {
 };
 
 export async function record(
-  recordTimefree: RecordTimefree,
+  program: ProgramTimefree,
   authToken: string,
 ): Promise<void> {
   const args = [
@@ -25,24 +25,24 @@ export async function record(
     "-headers",
     `X-Radiko-Authtoken: ${authToken}`,
     "-i",
-    `https://radiko.jp/v2/api/ts/playlist.m3u8?station_id=${recordTimefree.station}&l=15&ft=${recordTimefree.fromTime}&to=${recordTimefree.toTime}`,
+    `https://radiko.jp/v2/api/ts/playlist.m3u8?station_id=${program.station}&l=15&ft=${program.fromTime}&to=${program.toTime}`,
     "-b:a",
     "128k",
     "-y",
     "-metadata",
-    `title=${recordTimefree.title}`,
+    `title=${program.title}`,
     "-metadata",
-    `artist=${recordTimefree.artist}`,
+    `artist=${program.artist}`,
     "-metadata",
-    `year=${recordTimefree.year}`,
-    recordTimefree.outputFileName,
+    `year=${program.year}`,
+    program.outputFileName,
   ];
   const { success, stdout, stderr } = await run(args);
   if (success) {
     const logger = getLogger("queue");
     logger.info(new TextDecoder().decode(stdout));
 
-    await putMp3(recordTimefree.outputFileName);
+    await putMp3(program.outputFileName);
   } else {
     const error = new TextDecoder().decode(stderr);
     throw new RecRadikoError(error);

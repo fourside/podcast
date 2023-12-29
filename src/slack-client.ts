@@ -4,13 +4,11 @@ import { getLogger } from "./logger.ts";
 export async function sendMessageToSlack(
   webhookUrl: string,
   message: string,
-  title: string,
-  artist: string,
+  programInfo: { title: string; artist: string } | undefined,
 ): Promise<void> {
   const blocks = buildBlockKit(
     "Failure of recording",
-    title,
-    artist,
+    programInfo,
     message,
     new Date(),
   );
@@ -21,22 +19,24 @@ export async function sendMessageToSlack(
     },
     body: JSON.stringify(blocks),
   });
-  const logger = getLogger("realtime");
+  const logger = getLogger("common");
   logger.info("Send Slack response.", response);
 }
 
 function buildBlockKit(
   headerText: string,
-  title: string,
-  artist: string,
+  programInfo: { title: string; artist: string } | undefined,
   message: string,
   date: Date,
 ): Blocks {
-  const titleAndArtistBlock: SectionBlock = {
+  const additionalInfo = programInfo === undefined
+    ? ""
+    : `\n*${programInfo.title}*/*${programInfo.artist}*`;
+  const headerTextBlock: SectionBlock = {
     "type": "section",
     "text": {
       "type": "mrkdwn",
-      "text": `${headerText}\n*${title}*/*${artist}*`,
+      "text": `${headerText}${additionalInfo}`,
     },
   };
   const messageBlock: SectionBlock = {
@@ -56,60 +56,7 @@ function buildBlockKit(
     ],
   };
   return {
-    blocks: [titleAndArtistBlock, messageBlock, dateContextBlock],
-  };
-}
-
-export async function sendTimefreeErrorMessageToSlack(
-  webhookUrl: string,
-  errorMessage: string,
-): Promise<void> {
-  const blocks = buildTimefreeErrorBlockKit(
-    "Failure of Timefree recording",
-    errorMessage,
-    new Date(),
-  );
-  const response = await fetch(webhookUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(blocks),
-  });
-  const logger = getLogger("queue");
-  logger.info("Send Slack response.", response);
-}
-
-function buildTimefreeErrorBlockKit(
-  headerText: string,
-  message: string,
-  date: Date,
-): Blocks {
-  const titleAndArtistBlock: SectionBlock = {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": `${headerText}`,
-    },
-  };
-  const messageBlock: SectionBlock = {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": "```" + message + "```",
-    },
-  };
-  const dateContextBlock: ContextBlock = {
-    "type": "context",
-    "elements": [
-      {
-        "type": "plain_text",
-        "text": formatDateTime(date),
-      },
-    ],
-  };
-  return {
-    blocks: [titleAndArtistBlock, messageBlock, dateContextBlock],
+    blocks: [headerTextBlock, messageBlock, dateContextBlock],
   };
 }
 

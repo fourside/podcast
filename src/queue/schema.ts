@@ -1,6 +1,6 @@
 import { z } from "x/zod";
 
-const ProgramSchema = z.object({
+const TaskSchema = z.object({
   id: z.string(),
   stationId: z.string(),
   title: z.string(),
@@ -9,6 +9,6 @@ const ProgramSchema = z.object({
   duration: z.string(),
 });
 
-export const ProgramsSchema = z.array(ProgramSchema);
+export const TasksSchema = z.array(TaskSchema);
 
-export type Program = z.infer<typeof ProgramSchema>;
+export type Task = z.infer<typeof TaskSchema>;
