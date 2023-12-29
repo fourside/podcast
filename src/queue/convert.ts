@@ -2,42 +2,59 @@ import {
   addMinutes,
   formatTimefreeDateTime,
   getDateIfMidnightThenSubtracted,
+  minusDays,
   parseAsFromTime,
 } from "../date.ts";
 import { getLogger } from "../logger.ts";
 import { getOutputFilename } from "../output-filename.ts";
-import type { RecordTimefree } from "./record.ts";
-import type { Program } from "./schema.ts";
+import type { ProgramTimefree } from "./record.ts";
+import type { Task } from "./schema.ts";
+
+type Result = {
+  type: "in_the_future" | "over_a_week" | "already_done";
+} | {
+  type: "success";
+  program: ProgramTimefree;
+};
 
 export async function convert(
-  program: Program,
-): Promise<RecordTimefree | undefined> {
+  task: Task,
+): Promise<Result> {
   const logger = getLogger("queue");
-  const fromDate = parseAsFromTime(program.fromTime);
+  const fromDate = parseAsFromTime(task.fromTime);
   const toDate = addMinutes(
     fromDate,
-    Number.parseInt(program.duration, 10),
+    Number.parseInt(task.duration, 10),
   );
-  if (toDate.getTime() > Date.now()) {
-    return;
+  const today = new Date();
+  if (toDate.getTime() > today.getTime()) {
+    return { type: "in_the_future" };
+  }
+
+  const oneWeekAgo = minusDays(today, 7);
+  if (toDate.getTime() < oneWeekAgo.getTime()) {
+    return { type: "over_a_week" };
   }
 
   const recordDate = getDateIfMidnightThenSubtracted(fromDate);
-  const fileName = getOutputFilename(program.title, recordDate);
+  const fileName = getOutputFilename(task.title, recordDate);
 
   const isAlreadyRecoded = await fileExists(fileName);
   if (isAlreadyRecoded) {
-    logger.info(`already handled message: title: ${program.title}`);
-    return;
+    logger.info(`already handled message: title: ${task.title}`);
+    return { type: "already_done" };
   }
   return {
-    station: program.stationId,
-    title: program.title,
-    artist: program.personality,
-    fromTime: formatTimefreeDateTime(fromDate),
-    toTime: formatTimefreeDateTime(toDate),
-    year: fromDate.getFullYear(),
-    outputFileName: fileName,
+    type: "success",
+    program: {
+      station: task.stationId,
+      title: task.title,
+      artist: task.personality,
+      fromTime: formatTimefreeDateTime(fromDate),
+      toTime: formatTimefreeDateTime(toDate),
+      year: fromDate.getFullYear(),
+      outputFileName: fileName,
+    },
   };
 }
 

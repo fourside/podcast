@@ -1,10 +1,10 @@
 import { authorize } from "../auth-client.ts";
 import { Env } from "../env.ts";
 import { getLogger, setupLog } from "../logger.ts";
-import { sendTimefreeErrorMessageToSlack } from "../slack-client.ts";
+import { sendMessageToSlack } from "../slack-client.ts";
 import { convert } from "./convert.ts";
 import { record } from "./record.ts";
-import { type Program, ProgramsSchema } from "./schema.ts";
+import { type Task, TasksSchema } from "./schema.ts";
 
 export async function main(_: string[]) {
   setupLog(Env.isProduction ? "INFO" : "DEBUG");
@@ -15,7 +15,14 @@ export async function main(_: string[]) {
     const logger = getLogger("queue");
     logger.error(error);
     try {
-      await sendTimefreeErrorMessageToSlack(Env.webhookUrl, error.message);
+      const programInfo = error instanceof QueueError
+        ? { title: error.task.title, artist: error.task.personality }
+        : undefined;
+      await sendMessageToSlack(
+        Env.webhookUrl,
+        error.message,
+        programInfo,
+      );
     } catch (slackError) {
       logger.error("Send slack failed.", slackError);
     }
@@ -24,23 +31,42 @@ export async function main(_: string[]) {
 }
 
 async function readQueue(): Promise<void> {
-  const programs = await fetchPrograms();
-  for (const program of programs) {
+  const tasks = await fetchTasks();
+  for (const task of tasks) {
     try {
-      const recordTimefree = await convert(program);
-      if (recordTimefree === undefined) {
-        continue;
+      const result = await convert(task);
+      switch (result.type) {
+        case "in_the_future":
+          break;
+        case "success": {
+          const authToken = await authorize();
+          await record(result.program, authToken);
+          await deleteTask(task.id);
+          break;
+        }
+        case "already_done":
+        case "over_a_week":
+          await deleteTask(task.id);
+          break;
+        default:
+          throw new Error(`not handled convert result type: ${result}`);
       }
-      const authToken = await authorize();
-      await record(recordTimefree, authToken);
-      await deleteProgram(program.id);
     } catch (error) {
-      throw error;
+      throw new QueueError(error.message, task, { cause: error.cause });
     }
   }
 }
 
-async function fetchPrograms(): Promise<Program[]> {
+class QueueError extends Error {
+  public readonly task: Task;
+  constructor(message: string, task: Task, options: ErrorOptions) {
+    super(message, options);
+    this.name = this.constructor.name;
+    this.task = task;
+  }
+}
+
+async function fetchTasks(): Promise<Task[]> {
   const res = await fetch(`${Env.queueUrl}/tasks`, {
     headers: {
       Authorization: `Basic ${
@@ -49,10 +75,10 @@ async function fetchPrograms(): Promise<Program[]> {
     },
   });
   const json = await res.json();
-  return ProgramsSchema.parse(json);
+  return TasksSchema.parse(json);
 }
 
-async function deleteProgram(id: string): Promise<void> {
+async function deleteTask(id: string): Promise<void> {
   await fetch(`${Env.queueUrl}/tasks/${id}`, {
     method: "DELETE",
     headers: {

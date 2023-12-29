@@ -25,7 +25,10 @@ export async function main(args: string[]) {
   } catch (error) {
     logger.error("record failed.", error);
     try {
-      await sendMessageToSlack(Env.webhookUrl, error.message, title, artist);
+      await sendMessageToSlack(Env.webhookUrl, error.message, {
+        title,
+        artist,
+      });
     } catch (slackError) {
       logger.error("Send slack failed.", slackError);
     }
@@ -33,25 +36,25 @@ export async function main(args: string[]) {
   }
 }
 
-type RecordValue = {
+type Params = {
   station: string;
   duration: number;
   title: string;
   artist: string;
 };
 
-async function realtime(recordValue: RecordValue): Promise<void> {
+async function realtime(params: Params): Promise<void> {
   const authToken = await authorize();
-  const xml = await getPlaylistXml(recordValue.station);
+  const xml = await getPlaylistXml(params.station);
   const playListUrl = getPlaylistUriFromXml(xml);
   const recordDate = getDateIfMidnightThenSubtracted(new Date());
-  const outputFileName = getOutputFilename(recordValue.title, recordDate);
+  const outputFileName = getOutputFilename(params.title, recordDate);
   await record(
     {
-      station: recordValue.station,
-      duration: recordValue.duration,
-      title: recordValue.title,
-      artist: recordValue.artist,
+      station: params.station,
+      duration: params.duration,
+      title: params.title,
+      artist: params.artist,
       year: recordDate.getFullYear(),
       outputFileName,
     },

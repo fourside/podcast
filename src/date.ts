@@ -31,6 +31,10 @@ export function addMinutes(date: Date, minutes: number): Date {
   return new Date(date.getTime() + minutes * 1000 * 60);
 }
 
+export function minusDays(date: Date, days: number): Date {
+  return new Date(date.getTime() - (days * 1000 * 60 * 60 * 24));
+}
+
 export function formatTimefreeDateTime(date: Date): string {
   return format(date, "yyyyMMddHHmmss");
 }

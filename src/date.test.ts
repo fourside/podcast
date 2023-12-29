@@ -5,6 +5,7 @@ import {
   formatTimefreeDateTime,
   getDateIfMidnightThenSubtracted,
   isoDateTime,
+  minusDays,
   parseAsFromTime,
 } from "./date.ts";
 
@@ -93,6 +94,16 @@ Deno.test("addMinutes over date", () => {
   const result = addMinutes(date, durationMin);
   // assert
   assertEquals(result, new Date(2020, 0, 11, 2, 0, 0));
+});
+
+Deno.test("minusDays", () => {
+  // arrange
+  const date = new Date(2020, 3, 1, 23, 30, 5);
+  const days = 2;
+  // act
+  const result = minusDays(date, days);
+  // assert
+  assertEquals(result, new Date(2020, 2, 30, 23, 30, 5));
 });
 
 Deno.test("formatTimefreeDateTime", () => {
