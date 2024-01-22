@@ -149,6 +149,7 @@
     "https://deno.land/x/aws_api@v0.8.1/extras/s3-upload.ts": "4811f100d742725ccfd5f4f634f0374f5b5b4787db4194d14779e822b4881fd5",
     "https://deno.land/x/aws_api@v0.8.1/services/s3/mod.ts": "03fcdeb80c046d69f35b787ceda383dcf7332c7581d5d2a401058f50323c1c33",
     "https://deno.land/x/aws_api@v0.8.1/services/s3/structs.ts": "099dee8ee8a1b803b5d9d2b40cb8da170163ea4fd5b9910b2565275a012f37da",
+    "https://deno.land/x/sentry@7.94.1/index.mjs": "a7c764812beabd7dfcaac182b4d719a8207e40b57ce8f3aa8cb35ad422529b35",
     "https://deno.land/x/xml@2.1.1/mod.ts": "4a314a7a28d1ec92f899ce4c6991f0356c77550a75955ec3f4a36733f08548e8",
     "https://deno.land/x/xml@2.1.1/parse.ts": "614b8648345ae93c641368836947484d321c7ac9312ae12ec750434353cd7385",
     "https://deno.land/x/xml@2.1.1/stringify.ts": "930d35431f153b29d36549cff08fcfbe978e52ccb56af1e3baa2e0760f418b04",

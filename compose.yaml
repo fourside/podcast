@@ -18,6 +18,7 @@ services:
         - QUEUE_PASSWORD
         - SLACK_WEBHOOK_URL
         - IS_PRODUCTION
+        - SENTRY_DSN
 
 volumes:
   FILES_DIR:
