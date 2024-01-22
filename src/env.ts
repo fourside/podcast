@@ -17,6 +17,7 @@ export const Env = Object.freeze({
     unreachable("QUEUE_USERNAME"),
   queuePassword: Deno.env.get("QUEUE_PASSWORD") ||
     unreachable("QUEUE_PASSWORD"),
+  sentryDsn: Deno.env.get("SENTRY_DSN") || unreachable("SENTRY_DSN"),
 });
 
 function unreachable(name: string): never {

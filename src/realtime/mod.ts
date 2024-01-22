@@ -1,3 +1,4 @@
+import Sentry from "x/sentry";
 import { authorize } from "../auth-client.ts";
 import { getDateIfMidnightThenSubtracted } from "../date.ts";
 import { Env } from "../env.ts";
@@ -32,7 +33,7 @@ export async function main(args: string[]) {
     } catch (slackError) {
       logger.error("Send slack failed.", slackError);
     }
-    Deno.exit(-1);
+    throw error;
   }
 }
 
@@ -64,5 +65,11 @@ async function realtime(params: Params): Promise<void> {
 }
 
 if (import.meta.main) {
-  await main(Deno.args);
+  Sentry.init({ dsn: Env.sentryDsn });
+  try {
+    await main(Deno.args);
+  } catch (error) {
+    Sentry.captureException(error);
+    Deno.exit(-1);
+  }
 }

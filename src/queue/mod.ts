@@ -1,3 +1,4 @@
+import Sentry from "x/sentry";
 import { authorize } from "../auth-client.ts";
 import { Env } from "../env.ts";
 import { getLogger, setupLog } from "../logger.ts";
@@ -26,7 +27,7 @@ export async function main(_: string[]) {
     } catch (slackError) {
       logger.error("Send slack failed.", slackError);
     }
-    Deno.exit(-1);
+    throw error;
   }
 }
 
@@ -90,5 +91,11 @@ async function deleteTask(id: string): Promise<void> {
 }
 
 if (import.meta.main) {
-  await main(Deno.args);
+  Sentry.init({ dsn: Env.sentryDsn });
+  try {
+    await main(Deno.args);
+  } catch (error) {
+    Sentry.captureException(error);
+    Deno.exit(-1);
+  }
 }

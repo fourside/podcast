@@ -43,6 +43,11 @@ if [[ ! "${SLACK_WEBHOOK_URL+set}" ]]; then
   exit 1
 fi
 
+if [[ ! "${SENTRY_DSN+set}" ]]; then
+  echo "set env SENTRY_DSN"
+  exit 1
+fi
+
 docker compose ps
 docker compose build
 docker compose down
