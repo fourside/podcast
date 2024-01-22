@@ -1,4 +1,4 @@
-import Sentry from "x/sentry";
+import * as Sentry from "x/sentry";
 import { authorize } from "../auth-client.ts";
 import { Env } from "../env.ts";
 import { getLogger, setupLog } from "../logger.ts";
