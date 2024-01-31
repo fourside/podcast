@@ -19,6 +19,7 @@
     "x/aws_api/client": "https://deno.land/x/aws_api@v0.8.1/client/mod.ts",
     "x/aws_api/s3": "https://deno.land/x/aws_api@v0.8.1/services/s3/mod.ts",
     "x/aws_api/s3-upload": "https://deno.land/x/aws_api@v0.8.1/extras/s3-upload.ts",
+    "x/djwt": "https://deno.land/x/djwt@v3.0.1/mod.ts",
     "x/sentry": "https://deno.land/x/sentry@7.94.1/index.mjs",
     "x/zod": "https://deno.land/x/zod@v3.22.2/mod.ts",
     "x/xml": "https://deno.land/x/xml@2.1.1/mod.ts"

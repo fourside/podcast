@@ -4,6 +4,7 @@ import { Env } from "../env.ts";
 import { getLogger, setupLog } from "../logger.ts";
 import { sendMessageToSlack } from "../slack-client.ts";
 import { convert } from "./convert.ts";
+import { createJwt } from "./jwt.ts";
 import { record } from "./record.ts";
 import { type Task, TasksSchema } from "./schema.ts";
 
@@ -32,6 +33,7 @@ export async function main(_: string[]) {
 }
 
 async function readQueue(): Promise<void> {
+  const logger = getLogger("queue");
   const tasks = await fetchTasks();
   for (const task of tasks) {
     try {
@@ -40,9 +42,13 @@ async function readQueue(): Promise<void> {
         case "in_the_future":
           break;
         case "success": {
+          logger.info(
+            `start: ${result.program.title}-${result.program.fromTime}`,
+          );
           const authToken = await authorize();
           await record(result.program, authToken);
           await deleteTask(task.id);
+          logger.info("done");
           break;
         }
         case "already_done":
@@ -68,25 +74,19 @@ class QueueError extends Error {
 }
 
 async function fetchTasks(): Promise<Task[]> {
+  const jwt = await createJwt();
   const res = await fetch(`${Env.queueUrl}/tasks`, {
-    headers: {
-      Authorization: `Basic ${
-        btoa(`${Env.queueUsername}:${Env.queuePassword}`)
-      }`,
-    },
+    headers: { Authorization: `Bearer ${jwt}` },
   });
   const json = await res.json();
   return TasksSchema.parse(json);
 }
 
 async function deleteTask(id: string): Promise<void> {
+  const jwt = await createJwt();
   await fetch(`${Env.queueUrl}/tasks/${id}`, {
     method: "DELETE",
-    headers: {
-      Authorization: `Basic ${
-        btoa(`${Env.queueUsername}:${Env.queuePassword}`)
-      }`,
-    },
+    headers: { Authorization: `Bearer ${jwt}` },
   });
 }
 
