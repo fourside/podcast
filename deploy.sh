@@ -33,8 +33,8 @@ if [[ ! "${QUEUE_USERNAME+set}" ]]; then
   exit 1
 fi
 
-if [[ ! "${QUEUE_PASSWORD+set}" ]]; then
-  echo "set env QUEUE_PASSWORD"
+if [[ ! "${QUEUE_SECRET_KEY+set}" ]]; then
+  echo "set env QUEUE_SECRET_KEY"
   exit 1
 fi
 

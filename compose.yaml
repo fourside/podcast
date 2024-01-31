@@ -15,7 +15,7 @@ services:
         - CLOUDFLARE_SECRET_ACCESS_KEY
         - QUEUE_URL
         - QUEUE_USERNAME
-        - QUEUE_PASSWORD
+        - QUEUE_SECRET_KEY
         - SLACK_WEBHOOK_URL
         - IS_PRODUCTION
         - SENTRY_DSN

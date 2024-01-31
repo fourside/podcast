@@ -12,9 +12,10 @@ export CLOUDFLARE_ACCESS_KEY_ID=xxxxxxx
 export CLOUDFLARE_SECRET_ACCESS_KEY=xxxxxxx
 export QUEUE_URL=xxxxxxx
 export QUEUE_USERNAME=xxxxxxx
-export QUEUE_PASSWORD=xxxxxxx
+export QUEUE_SECRET_KEY=xxxxxxx
 export SLACK_WEBHOOK_URL=xxxxxxx
 export IS_PRODUCTION=true
+export SENTRY_DSN=xxxxxxx
 EOF
 ```
 

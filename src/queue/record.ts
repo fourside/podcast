@@ -39,8 +39,10 @@ export async function record(
   ];
   const { success, stdout, stderr } = await run(args);
   if (success) {
-    const logger = getLogger("queue");
-    logger.info(new TextDecoder().decode(stdout));
+    if (stdout.length !== 0) {
+      const logger = getLogger("queue");
+      logger.info(new TextDecoder().decode(stdout));
+    }
 
     await putMp3(program.outputFileName);
   } else {
